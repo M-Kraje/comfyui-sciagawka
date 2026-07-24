@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ComfyUI — ściągawka do szkolenia</title>
+<style>
+  :root {
+    --canvas: #f3f4f0;
+    --node: #ffffff;
+    --edge: #d7dad2;
+    --ink: #21241d;
+    --ink-soft: #585d51;
+    --ink-faint: #878c7d;
+    --grid-dot: #d2d5cd;
+    --chip: #e8eae2;
+    --w-clip: #a67d10;   /* M1 */
+    --w-model: #6f52b6;  /* M2 */
+    --w-latent: #b8447f; /* M3 */
+    --w-image: #227e7c;  /* materiały / linki */
+    --w-cond: #c1631f;
+    --shadow: 0 1px 2px rgba(33,36,29,.06), 0 5px 16px rgba(33,36,29,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --canvas: #14161a;
+      --node: #21242a;
+      --edge: #333841;
+      --ink: #e8e9e3;
+      --ink-soft: #a7ac9e;
+      --ink-faint: #757a6d;
+      --grid-dot: #23272e;
+      --chip: #2a2e35;
+      --w-clip: #e0c04a;
+      --w-model: #a488e0;
+      --w-latent: #e070ae;
+      --w-image: #4dc3c0;
+      --w-cond: #e8904e;
+      --shadow: 0 1px 3px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.28);
+    }
+  }
+  :root[data-theme="light"] {
+    --canvas: #f3f4f0; --node: #ffffff; --edge: #d7dad2; --ink: #21241d;
+    --ink-soft: #585d51; --ink-faint: #878c7d; --grid-dot: #d2d5cd; --chip: #e8eae2;
+    --w-clip: #a67d10; --w-model: #6f52b6; --w-latent: #b8447f; --w-image: #227e7c; --w-cond: #c1631f;
+    --shadow: 0 1px 2px rgba(33,36,29,.06), 0 5px 16px rgba(33,36,29,.05);
+  }
+  :root[data-theme="dark"] {
+    --canvas: #14161a; --node: #21242a; --edge: #333841; --ink: #e8e9e3;
+    --ink-soft: #a7ac9e; --ink-faint: #757a6d; --grid-dot: #23272e; --chip: #2a2e35;
+    --w-clip: #e0c04a; --w-model: #a488e0; --w-latent: #e070ae; --w-image: #4dc3c0; --w-cond: #e8904e;
+    --shadow: 0 1px 3px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.28);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background-color: var(--canvas);
+    background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 820px; margin: 0 auto; padding: 52px 24px 72px; }
+  .mono { font-family: "Cascadia Code", Consolas, "SF Mono", ui-monospace, monospace; }
+  .eyebrow {
+    font-family: "Cascadia Code", Consolas, ui-monospace, monospace;
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint);
+  }
+
+  header h1 {
+    font-size: clamp(2rem, 5.4vw, 2.8rem); font-weight: 760; letter-spacing: -.022em;
+    line-height: 1.06; text-wrap: balance; margin: 11px 0 10px;
+  }
+  header .lede { font-size: 1.04rem; color: var(--ink-soft); max-width: 60ch; margin: 0; }
+
+  .pipe { display: block; width: 100%; max-width: 560px; height: auto; margin: 30px 0 4px; overflow: visible; }
+  .pipe rect { fill: var(--node); stroke: var(--edge); }
+  .pipe text { font-family: "Cascadia Code", Consolas, monospace; font-size: 12px; fill: var(--ink-soft); }
+
+  section { margin-top: 54px; }
+  h2 { font-size: 1.3rem; font-weight: 720; letter-spacing: -.01em; margin: 8px 0 6px; text-wrap: balance; }
+  section > .intro { color: var(--ink-soft); max-width: 64ch; margin: 0 0 22px; font-size: .95rem; }
+
+  /* glossary node-cards */
+  .group {
+    background: var(--node); border: 1px solid var(--edge); border-top: 3px solid var(--gc, var(--edge));
+    border-radius: 9px; box-shadow: var(--shadow); padding: 16px 20px 18px; margin-top: 16px;
+  }
+  .group > .lbl {
+    font-family: "Cascadia Code", Consolas, monospace; font-size: .7rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--gc, var(--ink-faint)); font-weight: 600;
+    display: flex; align-items: baseline; gap: 9px;
+  }
+  .group > .lbl .mod { color: var(--ink-faint); }
+  .terms { display: grid; gap: 11px; margin-top: 14px; }
+  .term { display: grid; grid-template-columns: 210px 1fr; gap: 6px 20px; align-items: baseline; }
+  .term dt {
+    font-family: "Cascadia Code", Consolas, monospace; font-size: .86rem; font-weight: 600;
+    color: var(--gc, var(--ink)); word-break: break-word;
+  }
+  .term dd { margin: 0; font-size: .92rem; color: var(--ink-soft); }
+  .term dd b { color: var(--ink); font-weight: 600; }
+  @media (max-width: 560px) {
+    .term { grid-template-columns: 1fr; gap: 2px; }
+  }
+
+  .soon {
+    margin-top: 18px; padding: 12px 16px; border: 1px dashed var(--edge); border-radius: 8px;
+    background: var(--chip); font-size: .88rem; color: var(--ink-soft);
+  }
+  .soon b { color: var(--ink); }
+  .soon .mono { color: var(--ink); }
+
+  /* materials / links cards */
+  .cards { display: grid; gap: 12px; }
+  .row {
+    background: var(--node); border: 1px solid var(--edge); border-radius: 9px; box-shadow: var(--shadow);
+    padding: 14px 18px; display: grid; grid-template-columns: 148px 1fr; gap: 6px 20px; align-items: baseline;
+  }
+  .row .k {
+    font-family: "Cascadia Code", Consolas, monospace; font-size: .74rem; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--w-image); font-weight: 600;
+  }
+  .row .v { font-size: .93rem; color: var(--ink-soft); }
+  .row .v b { color: var(--ink); font-weight: 600; }
+  .row .v code {
+    font-family: "Cascadia Code", Consolas, monospace; font-size: .85em;
+    background: var(--chip); padding: 1px 6px; border-radius: 4px; color: var(--ink);
+  }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; gap: 3px; } }
+
+  a { color: var(--w-image); text-decoration: none; border-bottom: 1px solid transparent; }
+  a:hover { border-bottom-color: currentColor; }
+  a:focus-visible { outline: 2px solid var(--w-image); outline-offset: 3px; border-radius: 2px; }
+
+  .profiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 4px; }
+  .prof {
+    background: var(--node); border: 1px solid var(--edge); border-radius: 9px; box-shadow: var(--shadow);
+    padding: 14px 16px;
+  }
+  .prof .h { font-family: "Cascadia Code", Consolas, monospace; font-weight: 650; font-size: .92rem; }
+  .prof p { margin: 5px 0 0; font-size: .85rem; color: var(--ink-soft); }
+
+  footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--edge); font-size: .8rem; color: var(--ink-faint); }
+
+  section, header > * { animation: rise .5s cubic-bezier(.2,.6,.2,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { section, header > * { animation: none; } }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header>
+    <span class="eyebrow">materiały do szkolenia · żywy dokument</span>
+    <h1>ComfyUI — ściągawka</h1>
+    <p class="lede">Towarzysz do filmów. Wracaj tu, kiedy dłubiesz sam: hasła z każdego modułu, materiały i miejsca, gdzie podejrzysz, jak robią to inni. Dokument rośnie z każdym kolejnym filmem.</p>
+
+    <svg class="pipe" viewBox="0 0 560 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schemat: prompt, szum, latent, obraz — połączone jak węzły w ComfyUI">
+      <g fill="none" stroke-width="2">
+        <path d="M92 30 C 116 30, 122 30, 146 30" stroke="var(--w-clip)"/>
+        <path d="M238 30 C 262 30, 268 30, 292 30" stroke="var(--w-model)"/>
+        <path d="M384 30 C 408 30, 414 30, 438 30" stroke="var(--w-latent)"/>
+      </g>
+      <g>
+        <rect x="8" y="12" width="84" height="36" rx="6"/><text x="50" y="34" text-anchor="middle">prompt</text>
+        <circle cx="92" cy="30" r="4" fill="var(--w-clip)"/>
+        <rect x="146" y="12" width="92" height="36" rx="6"/><text x="192" y="34" text-anchor="middle">szum</text>
+        <circle cx="146" cy="30" r="4" fill="var(--w-clip)"/><circle cx="238" cy="30" r="4" fill="var(--w-model)"/>
+        <rect x="292" y="12" width="92" height="36" rx="6"/><text x="338" y="34" text-anchor="middle">latent</text>
+        <circle cx="292" cy="30" r="4" fill="var(--w-model)"/><circle cx="384" cy="30" r="4" fill="var(--w-latent)"/>
+        <rect x="438" y="12" width="92" height="36" rx="6"/><text x="484" y="34" text-anchor="middle">obraz ✓</text>
+        <circle cx="438" cy="30" r="4" fill="var(--w-latent)"/>
+      </g>
+    </svg>
+  </header>
+
+  <section>
+    <span class="eyebrow">słowniczek</span>
+    <h2>Nazwy z filmów</h2>
+    <p class="intro">Nazwy zostawiam po angielsku — tak są w interfejsie i tak najłatwiej je zapamiętać. Po polsku tylko wyjaśnienie. Pogrupowane wg modułu, żeby łatwo było wrócić do właściwego filmu.</p>
+
+    <div class="group" style="--gc:var(--w-clip)">
+      <span class="lbl">od promptu do wyniku <span class="mod">· moduł 1</span></span>
+      <dl class="terms">
+        <div class="term"><dt>prompt</dt><dd>Opis tego, co chcesz zobaczyć. Im konkretniej, tym lepiej.</dd></div>
+        <div class="term"><dt>seed</dt><dd>Wybiera punkt startu w oceanie szumu. Zamienia losowość w liczbę, więc ten sam seed + prompt = ten sam obraz.</dd></div>
+        <div class="term"><dt>control_after_generate</dt><dd>Co zrobić z seedem po generacji: <b>fixed</b> (trzymaj), <b>random</b> (losuj), <b>increment</b> (+1).</dd></div>
+        <div class="term"><dt>batch size</dt><dd>Ile obrazów naraz z jednego uruchomienia.</dd></div>
+        <div class="term"><dt>resolution / aspect ratio</dt><dd>Rozmiar i proporcje obrazu: kwadrat, pion, poziom.</dd></div>
+        <div class="term"><dt>template</dt><dd>Gotowy workflow do wczytania. Wasz to <b>szkolenie_image_krea2_turbo_t2i</b> w bookmarks.</dd></div>
+      </dl>
+    </div>
+
+    <div class="group" style="--gc:var(--w-model)">
+      <span class="lbl">a co jest w środku <span class="mod">· moduł 2</span></span>
+      <dl class="terms">
+        <div class="term"><dt>subgraph</dt><dd>Pudełko chowające cały silnik. Wchodzisz do środka ikonką ⤢.</dd></div>
+        <div class="term"><dt>KSampler</dt><dd>Węzeł, który zamienia szum w obraz. Tu siedzą główne suwaki.</dd></div>
+        <div class="term"><dt>steps</dt><dd>Ile kroków „rzeźbienia". Więcej = więcej detalu, ale wolniej.</dd></div>
+        <div class="term"><dt>cfg</dt><dd>Jak mocno model trzyma się promptu. 1.0 dosłownie, wyżej = więcej swobody.</dd></div>
+        <div class="term"><dt>sampler / scheduler</dt><dd>Metoda i tempo przejścia od szumu do obrazu. Zwykle zostaw domyślne.</dd></div>
+        <div class="term"><dt>denoise</dt><dd>Ile szumu sprzątamy. 1.0 = od zera, mniej = zostaw część oryginału (klucz do img2img).</dd></div>
+        <div class="term"><dt>negative prompt</dt><dd>Czego NIE chcesz. Szybkie modele często mają go wyzerowany dla prędkości.</dd></div>
+        <div class="term"><dt>Load Diffusion Model / CLIP / VAE</dt><dd>Trzy części silnika: model, rozumienie tekstu, tłumacz latent↔piksele.</dd></div>
+      </dl>
+    </div>
+
+    <div class="group" style="--gc:var(--w-latent)">
+      <span class="lbl">dlaczego to działa <span class="mod">· moduł 3</span></span>
+      <dl class="terms">
+        <div class="term"><dt>noise / szum</dt><dd>Losowe kropki. Punkt startu każdego obrazu.</dd></div>
+        <div class="term"><dt>diffusion / dyfuzja</dt><dd>Krok po kroku model odejmuje szum, aż wyłoni się obraz.</dd></div>
+        <div class="term"><dt>latent</dt><dd>Ten sam szum docięty do wymiarów i mocno skompresowany. Tu pracuje model.</dd></div>
+        <div class="term"><dt>VAE decode / encode</dt><dd><b>decode</b>: latent → piksele (gotowy obraz). <b>encode</b>: piksele → latent (na później, przy edycji).</dd></div>
+      </dl>
+    </div>
+
+    <p class="soon">Wkrótce dojdą hasła z kolejnych modułów: <span class="mono">img2img</span>, <span class="mono">denoise</span> w praktyce, <span class="mono">LoRA</span>, two-pass (podwójny sampler).</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">materiały</span>
+    <h2>Gdzie i jak pracujecie</h2>
+    <div class="cards">
+      <div class="row"><span class="k">Comfy Cloud</span><span class="v">Wchodzisz na <a href="https://cloud.comfy.org" target="_blank" rel="noopener">cloud.comfy.org</a> i logujesz się swoim kontem. Sesja nie zawsze przetrwa — jak Cię wywali, po prostu zaloguj się ponownie.</span></div>
+      <div class="row"><span class="k">Wasz box</span><span class="v">Template <code>szkolenie_image_krea2_turbo_t2i</code> w bookmarks. Nic nie budujecie od zera — otwierasz i działasz.</span></div>
+      <div class="row"><span class="k">Filmy</span><span class="v"><b>M1</b> od promptu do wyniku · <b>M2</b> a co jest w środku · <b>M3</b> dlaczego to działa (szum i latent). Wszystkie na naszym czacie na Teams.</span></div>
+      <div class="row"><span class="k">Zadania</span><span class="v">Zestaw na weekend wisi na Teamsach. Rób na spokojnie — chodzi o to, żeby dotknąć samemu, nie o ideał.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">linki i profile</span>
+    <h2>Do pracy i do podglądania</h2>
+    <p class="intro">Najwięcej nauczysz się, patrząc jak promptują inni. Civitai to do tego kopalnia — przy każdym obrazie widać użyty prompt i ustawienia, a z czasem znajdziesz tam też LoRy do pobrania.</p>
+    <div class="cards">
+      <div class="row"><span class="k">Praca</span><span class="v"><a href="https://cloud.comfy.org" target="_blank" rel="noopener">cloud.comfy.org</a> — tu generujecie · <a href="https://docs.comfy.org" target="_blank" rel="noopener">docs.comfy.org</a> — oficjalna dokumentacja.</span></div>
+      <div class="row"><span class="k">Podglądanie</span><span class="v"><a href="https://civitai.com" target="_blank" rel="noopener">civitai.com</a> — galeria obrazów z gotowymi promptami i ustawieniami. Zobacz, jak ludzie budują opisy; później też LoRy.</span></div>
+      <div class="row"><span class="k">Workflow</span><span class="v"><a href="https://comfy.org/workflows/creators/" target="_blank" rel="noopener">comfy.org/workflows/creators</a> — gotowe workflow od twórców: obejrzyj, wczytaj, rozbierz na części.</span></div>
+    </div>
+
+    <p class="intro" style="margin-top:28px;margin-bottom:14px">Warto obserwować — konta, na których podejrzysz robotę na bieżąco:</p>
+    <div class="profiles">
+      <div class="prof"><div class="h"><a href="https://x.com/comfyui" target="_blank" rel="noopener">@ComfyUI</a></div><p>Oficjalne konto. Nowe funkcje i modele z pierwszej ręki.</p></div>
+      <div class="prof"><div class="h"><a href="https://x.com/ComfyUIWiki" target="_blank" rel="noopener">@ComfyUIWiki</a></div><p>Tutoriale i newsy, podane przystępnie — dobre na start.</p></div>
+      <div class="prof"><div class="h"><a href="https://x.com/multimodalart" target="_blank" rel="noopener">@multimodalart</a></div><p>Open source, prompting i modele do edycji obrazu.</p></div>
+      <div class="prof"><div class="h"><a href="https://x.com/AIWarper" target="_blank" rel="noopener">@AIWarper</a></div><p>Kreatywne AI wideo i animacje na ComfyUI.</p></div>
+      <div class="prof"><div class="h"><a href="https://x.com/PurzBeats" target="_blank" rel="noopener">@PurzBeats</a></div><p>ComfyUI na żywo, generatywna sztuka, dużo pokazywania „jak".</p></div>
+      <div class="prof"><div class="h"><a href="https://x.com/ingi_erlingsson" target="_blank" rel="noopener">@ingi_erlingsson</a></div><p>Twórczość AI i kierunek artystyczny — warte oka.</p></div>
+      <div class="prof"><div class="h"><a href="https://www.instagram.com/seungho__yeo/" target="_blank" rel="noopener">seungho__yeo</a></div><p>Instagram · wizualne eksperymenty AI.</p></div>
+    </div>
+  </section>
+
+  <footer>Ściągawka do szkolenia ComfyUI · aktualizowana z każdym modułem.</footer>
+</div>
+</body>
+</html>
