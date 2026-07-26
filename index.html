@@ -95,7 +95,13 @@
     display: flex; align-items: baseline; gap: 9px;
   }
   .group > .lbl .mod { color: var(--ink-faint); }
-  .terms { display: grid; gap: 11px; margin-top: 14px; }
+  /* film modułu — na początku grupy, przed hasłami */
+  .vid { display: block; width: 100%; margin-top: 15px; background: #0e0f13;
+    border: 1px solid var(--edge); border-radius: 7px; aspect-ratio: 16 / 9; }
+  .vid-meta { display: flex; align-items: baseline; gap: 10px 16px; flex-wrap: wrap; margin-top: 9px;
+    font-family: "Cascadia Code", Consolas, ui-monospace, monospace; font-size: .76rem; color: var(--ink-faint); }
+  .vid-meta .t { color: var(--gc, var(--ink-faint)); font-weight: 600; }
+  .terms { display: grid; gap: 11px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--edge); }
   .term { display: grid; grid-template-columns: 210px 1fr; gap: 6px 20px; align-items: baseline; }
   .term dt {
     font-family: "Cascadia Code", Consolas, monospace; font-size: .86rem; font-weight: 600;
@@ -185,6 +191,11 @@
 
     <div class="group" style="--gc:var(--w-clip)">
       <span class="lbl">od promptu do wyniku <span class="mod">· moduł 1</span></span>
+      <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m1.jpg">
+        <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m1.mp4" type="video/mp4" />
+        Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m1.mp4">Pobierz go tutaj</a>.
+      </video>
+      <div class="vid-meta"><span class="t">moduł 1</span><span>0:55</span><span>otwierasz template, wpisujesz prompt, dostajesz obraz</span></div>
       <dl class="terms">
         <div class="term"><dt>prompt</dt><dd>Opis tego, co chcesz zobaczyć. Im konkretniej, tym lepiej.</dd></div>
         <div class="term"><dt>seed</dt><dd>Wybiera punkt startu w oceanie szumu. Zamienia losowość w liczbę, więc ten sam seed + prompt = ten sam obraz.</dd></div>
@@ -197,6 +208,11 @@
 
     <div class="group" style="--gc:var(--w-model)">
       <span class="lbl">a co jest w środku <span class="mod">· moduł 2</span></span>
+      <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m2.jpg">
+        <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m2.mp4" type="video/mp4" />
+        Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m2.mp4">Pobierz go tutaj</a>.
+      </video>
+      <div class="vid-meta"><span class="t">moduł 2</span><span>2:33</span><span>wchodzimy do subgraphu i oglądamy silnik od środka</span></div>
       <dl class="terms">
         <div class="term"><dt>subgraph</dt><dd>Pudełko chowające cały silnik. Wchodzisz do środka ikonką ⤢.</dd></div>
         <div class="term"><dt>KSampler</dt><dd>Węzeł, który zamienia szum w obraz. Tu siedzą główne suwaki.</dd></div>
@@ -211,6 +227,11 @@
 
     <div class="group" style="--gc:var(--w-latent)">
       <span class="lbl">dlaczego to działa <span class="mod">· moduł 3</span></span>
+      <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m3.jpg">
+        <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m3.mp4" type="video/mp4" />
+        Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m3.mp4">Pobierz go tutaj</a>.
+      </video>
+      <div class="vid-meta"><span class="t">moduł 3</span><span>1:45</span><span>szum, dyfuzja, latent i VAE — skąd się bierze obraz</span></div>
       <dl class="terms">
         <div class="term"><dt>noise / szum</dt><dd>Losowe kropki. Punkt startu każdego obrazu.</dd></div>
         <div class="term"><dt>diffusion / dyfuzja</dt><dd>Krok po kroku model odejmuje szum, aż wyłoni się obraz.</dd></div>
@@ -228,7 +249,7 @@
     <div class="cards">
       <div class="row"><span class="k">Comfy Cloud</span><span class="v">Wchodzisz na <a href="https://cloud.comfy.org" target="_blank" rel="noopener">cloud.comfy.org</a> i logujesz się swoim kontem. Sesja nie zawsze przetrwa — jak Cię wywali, po prostu zaloguj się ponownie.</span></div>
       <div class="row"><span class="k">Wasz box</span><span class="v">Template <code>szkolenie_image_krea2_turbo_t2i</code> w bookmarks. Nic nie budujecie od zera — otwierasz i działasz.</span></div>
-      <div class="row"><span class="k">Filmy</span><span class="v"><b>M1</b> od promptu do wyniku · <b>M2</b> a co jest w środku · <b>M3</b> dlaczego to działa (szum i latent). Wszystkie na naszym czacie na Teams.</span></div>
+      <div class="row"><span class="k">Filmy</span><span class="v">Wszystkie trzy siedzą wyżej, przy hasłach ze swojego modułu — możesz je odtworzyć prosto z tej strony, ile razy chcesz.</span></div>
       <div class="row"><span class="k">Zadania</span><span class="v">Zestaw na weekend wisi na Teamsach. Rób na spokojnie — chodzi o to, żeby dotknąć samemu, nie o ideał.</span></div>
     </div>
   </section>
