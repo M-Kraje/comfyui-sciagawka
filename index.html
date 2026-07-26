@@ -225,21 +225,28 @@
     <h1>ComfyUI — ściągawka</h1>
     <p class="lede">Towarzysz do filmów. Wracaj tu, kiedy dłubiesz sam: hasła z każdego modułu, materiały i miejsca, gdzie podejrzysz, jak robią to inni. Dokument rośnie z każdym kolejnym filmem.</p>
 
-    <svg class="pipe" viewBox="0 0 560 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schemat: prompt, szum, latent, obraz — połączone jak węzły w ComfyUI">
+    <svg class="pipe" viewBox="0 0 560 112" xmlns="http://www.w3.org/2000/svg" role="img"
+         aria-label="Schemat: szum ograniczony do wymiarów daje latent; prompt dochodzi z boku jako druga wskazówka; z obu powstaje obraz">
       <g fill="none" stroke-width="2">
-        <path d="M92 30 C 116 30, 122 30, 146 30" stroke="var(--w-clip)"/>
-        <path d="M238 30 C 262 30, 268 30, 292 30" stroke="var(--w-model)"/>
-        <path d="M384 30 C 408 30, 414 30, 438 30" stroke="var(--w-latent)"/>
+        <!-- szum → latent (kabel latentu) -->
+        <path d="M106 78 C 124 78, 130 78, 148 78" stroke="var(--w-latent)"/>
+        <!-- latent → obraz -->
+        <path d="M254 78 C 320 78, 340 56, 402 56" stroke="var(--w-latent)"/>
+        <!-- prompt dochodzi z góry (kabel conditioning) -->
+        <path d="M106 26 C 240 26, 300 56, 402 56" stroke="var(--w-cond)"/>
       </g>
       <g>
-        <rect x="8" y="12" width="84" height="36" rx="6"/><text x="50" y="34" text-anchor="middle">prompt</text>
-        <circle cx="92" cy="30" r="4" fill="var(--w-clip)"/>
-        <rect x="146" y="12" width="92" height="36" rx="6"/><text x="192" y="34" text-anchor="middle">szum</text>
-        <circle cx="146" cy="30" r="4" fill="var(--w-clip)"/><circle cx="238" cy="30" r="4" fill="var(--w-model)"/>
-        <rect x="292" y="12" width="92" height="36" rx="6"/><text x="338" y="34" text-anchor="middle">latent</text>
-        <circle cx="292" cy="30" r="4" fill="var(--w-model)"/><circle cx="384" cy="30" r="4" fill="var(--w-latent)"/>
-        <rect x="438" y="12" width="92" height="36" rx="6"/><text x="484" y="34" text-anchor="middle">obraz ✓</text>
-        <circle cx="438" cy="30" r="4" fill="var(--w-latent)"/>
+        <rect x="8" y="9" width="98" height="34" rx="6"/><text x="57" y="30" text-anchor="middle">prompt</text>
+        <circle cx="106" cy="26" r="4" fill="var(--w-cond)"/>
+
+        <rect x="8" y="61" width="98" height="34" rx="6"/><text x="57" y="82" text-anchor="middle">szum</text>
+        <circle cx="106" cy="78" r="4" fill="var(--w-latent)"/>
+
+        <rect x="148" y="61" width="106" height="34" rx="6"/><text x="201" y="82" text-anchor="middle">latent</text>
+        <circle cx="148" cy="78" r="4" fill="var(--w-latent)"/><circle cx="254" cy="78" r="4" fill="var(--w-latent)"/>
+
+        <rect x="402" y="39" width="110" height="34" rx="6"/><text x="457" y="60" text-anchor="middle">obraz ✓</text>
+        <circle cx="402" cy="56" r="4" fill="var(--w-latent)"/>
       </g>
     </svg>
   </header>
