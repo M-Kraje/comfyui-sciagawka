@@ -152,6 +152,29 @@
 
   footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--edge); font-size: .8rem; color: var(--ink-faint); }
 
+  /* przełącznik motywu — widget węzła, nie pigułka słońce/księżyc */
+  #theme-toggle {
+    position: fixed; top: 16px; right: 16px; z-index: 50;
+    display: inline-flex; align-items: stretch; gap: 0; padding: 0; cursor: pointer;
+    background: var(--node); border: 1px solid var(--edge); border-radius: 6px;
+    box-shadow: var(--shadow); font-family: "Cascadia Code", Consolas, ui-monospace, monospace;
+    overflow: hidden;
+  }
+  #theme-toggle .tt-lab {
+    padding: 7px 9px; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-faint); border-right: 1px solid var(--edge);
+  }
+  #theme-toggle .tt-val {
+    padding: 7px 11px; font-size: .72rem; font-weight: 600; color: var(--w-image);
+    min-width: 62px; text-align: left;
+  }
+  #theme-toggle:hover .tt-val { background: var(--chip); }
+  #theme-toggle:focus-visible { outline: 2px solid var(--w-image); outline-offset: 2px; }
+  @media (max-width: 560px) {
+    #theme-toggle { top: 10px; right: 10px; }
+    #theme-toggle .tt-lab { display: none; }
+  }
+
   section, header > * { animation: rise .5s cubic-bezier(.2,.6,.2,1) both; }
   @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { section, header > * { animation: none; } }
@@ -159,7 +182,44 @@
 </head>
 <body>
 
+<script>
+  // Motyw: zapamiętany wybór wygrywa nad ustawieniem systemu. Ustawiane od razu, przed
+  // wyrenderowaniem treści, żeby nie było mignięcia jasnego tła na ciemnym motywie.
+  (function () {
+    var root = document.documentElement;
+    var KEY = "comfyui-sciagawka-motyw";
+    function czyCiemny() {
+      var z = null;
+      try { z = localStorage.getItem(KEY); } catch (e) {}
+      if (z === "dark" || z === "light") return z === "dark";
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    function ustaw(ciemny) {
+      root.setAttribute("data-theme", ciemny ? "dark" : "light");
+      var b = document.getElementById("theme-toggle");
+      if (b) {
+        b.setAttribute("aria-pressed", String(ciemny));
+        b.querySelector(".tt-val").textContent = ciemny ? "ciemny" : "jasny";
+      }
+    }
+    ustaw(czyCiemny());
+    document.addEventListener("DOMContentLoaded", function () {
+      ustaw(root.getAttribute("data-theme") === "dark");
+      var b = document.getElementById("theme-toggle");
+      if (!b) return;
+      b.addEventListener("click", function () {
+        var ciemny = root.getAttribute("data-theme") !== "dark";
+        ustaw(ciemny);
+        try { localStorage.setItem(KEY, ciemny ? "dark" : "light"); } catch (e) {}
+      });
+    });
+  })();
+</script>
+
 <div class="page">
+  <button id="theme-toggle" type="button" aria-pressed="false" aria-label="Przełącz motyw jasny i ciemny">
+    <span class="tt-lab">motyw</span><span class="tt-val">jasny</span>
+  </button>
   <header>
     <span class="eyebrow">materiały do szkolenia · żywy dokument</span>
     <h1>ComfyUI — ściągawka</h1>
