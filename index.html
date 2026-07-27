@@ -578,16 +578,21 @@
 
     // przeciąganie palcem i myszą
     var ramka = document.getElementById("kar-ramka");
-    var x0 = null, y0 = null;
-    ramka.addEventListener("pointerdown", function (e) { x0 = e.clientX; y0 = e.clientY; });
-    ramka.addEventListener("pointerup", function (e) {
+    var x0 = null, y0 = null, bylPrzeciag = false;
+    function start(x, y) { x0 = x; y0 = y; bylPrzeciag = false; }
+    function koniec(x, y) {
       if (x0 === null) return;
-      var dx = e.clientX - x0, dy = e.clientY - y0;
+      var dx = x - x0, dy = y - y0;
       x0 = null;
       // poziomy gest, nie pionowe przewijanie strony
-      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { idz(dx < 0 ? i + 1 : i - 1); }
-    });
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { bylPrzeciag = true; idz(dx < 0 ? i + 1 : i - 1); }
+    }
+    ramka.addEventListener("pointerdown", function (e) { start(e.clientX, e.clientY); });
+    ramka.addEventListener("pointerup", function (e) { koniec(e.clientX, e.clientY); });
     ramka.addEventListener("pointercancel", function () { x0 = null; });
+    // zapas dla przeglądarek bez pointer events
+    ramka.addEventListener("touchstart", function (e) { var t = e.changedTouches[0]; start(t.clientX, t.clientY); }, { passive: true });
+    ramka.addEventListener("touchend", function (e) { var t = e.changedTouches[0]; koniec(t.clientX, t.clientY); }, { passive: true });
 
     // strzałki na klawiaturze, gdy karuzela ma fokus
     ramka.addEventListener("keydown", function (e) {
@@ -612,7 +617,8 @@
     }
     for (var m = 0; m < ile; m++) {
       (function (el) {
-        el.addEventListener("click", function () { otworz(el.src, el.alt); });
+        // przeciągnięcie po obrazie ma przewijać karuzelę, a nie otwierać powiększenie
+        el.addEventListener("click", function () { if (bylPrzeciag) { bylPrzeciag = false; return; } otworz(el.src, el.alt); });
         el.addEventListener("keydown", function (e) {
           if (e.key === "Enter" || e.key === " ") { otworz(el.src, el.alt); e.preventDefault(); }
         });
