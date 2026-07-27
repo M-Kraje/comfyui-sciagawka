@@ -102,6 +102,30 @@
   .legend i { width: 17px; height: 3px; border-radius: 2px; display: inline-block; flex: none; }
   .pipe-cap { margin: 13px 0 0; font-size: var(--fs-body); line-height: 1.55; color: var(--ink-soft); max-width: 66ch; }
 
+  /* blok startowy — pierwsza rzecz po nagłówku, bo tu najczęściej się zacinają */
+  .start {
+    margin-top: 46px; background: var(--node); border: 1px solid var(--edge);
+    border-left: 4px solid var(--w-image); border-radius: 9px; box-shadow: var(--shadow);
+    padding: 22px 26px 24px;
+  }
+  .start h2 { margin: 0 0 4px; }
+  .start > p { color: var(--ink-soft); font-size: var(--fs-body); margin: 0 0 18px; max-width: 62ch; }
+  .kroki { display: grid; gap: 15px; margin: 0; padding: 0; list-style: none; counter-reset: krok; }
+  .kroki li { display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: baseline; }
+  .kroki li::before {
+    counter-increment: krok; content: counter(krok);
+    font-family: "Cascadia Code", Consolas, ui-monospace, monospace; font-size: var(--fs-small);
+    font-weight: 700; color: var(--w-image);
+    border: 1px solid var(--edge); border-radius: 6px; text-align: center; padding: 3px 0;
+  }
+  .kroki .tresc { font-size: var(--fs-body); color: var(--ink-soft); }
+  .kroki .tresc b { color: var(--ink); font-weight: 600; }
+  .start .uwaga {
+    margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--edge);
+    font-size: var(--fs-small); color: var(--ink-soft);
+  }
+  .start .uwaga b { color: var(--ink); font-weight: 600; }
+
   section { margin-top: 54px; }
   h2 { font-size: 1.375rem; font-weight: 720; letter-spacing: -.01em; margin: 8px 0 6px; text-wrap: balance; }
   section > .intro { color: var(--ink-soft); max-width: 64ch; margin: 0 0 22px; font-size: var(--fs-body); }
@@ -335,6 +359,18 @@
     <p class="pipe-cap">Cała ścieżka od tekstu do pliku. Prompt i szum nie stoją w kolejce — dochodzą do KSamplera osobnymi kablami i dopiero tam się spotykają. Kolory kabli są takie same jak w ComfyUI, więc po nich rozpoznasz, co gdzie pasuje.</p>
   </header>
 
+  <section class="start">
+    <span class="eyebrow">zanim zaczniesz</span>
+    <h2>Jak w ogóle wejść</h2>
+    <p>Trzy kroki i jesteś w środku. Jeśli coś ma Cię zatrzymać, to zatrzyma Cię tutaj, więc zaczynamy właśnie od tego.</p>
+    <ol class="kroki">
+      <li><span class="tresc">Wchodzisz na <a href="https://cloud.comfy.org" target="_blank" rel="noopener">cloud.comfy.org</a>.</span></li>
+      <li><span class="tresc">Logujesz się. <b>Login i hasło są przypięte u góry naszego czatu na Teams</b> — nie zakładasz własnego konta.</span></li>
+      <li><span class="tresc">Otwierasz <b>bookmarks</b> na pasku po lewej i wybierasz template <code>szkolenie_image_krea2_turbo_t2i</code>. Nic nie budujesz od zera.</span></li>
+    </ol>
+    <p class="uwaga"><b>Wylogowuje Cię co jakiś czas i to normalne.</b> Nie znaczy, że coś zepsułeś ani że straciłeś dostęp. Logujesz się ponownie tymi samymi danymi i wracasz do pracy. Jeśli po zalogowaniu nie widzisz template'u, odśwież stronę.</p>
+  </section>
+
   <section>
     <span class="eyebrow">słowniczek</span>
     <h2>Nazwy z filmów</h2>
@@ -398,8 +434,6 @@
     <span class="eyebrow">materiały</span>
     <h2>Gdzie i jak pracujecie</h2>
     <div class="cards">
-      <div class="row"><span class="k">Comfy Cloud</span><span class="v">Wchodzisz na <a href="https://cloud.comfy.org" target="_blank" rel="noopener">cloud.comfy.org</a> i logujesz się swoim kontem. Sesja nie zawsze przetrwa — jak Cię wywali, po prostu zaloguj się ponownie.</span></div>
-      <div class="row"><span class="k">Wasz box</span><span class="v">Template <code>szkolenie_image_krea2_turbo_t2i</code> w bookmarks. Nic nie budujecie od zera — otwierasz i działasz.</span></div>
       <div class="row"><span class="k">Filmy</span><span class="v">Wszystkie trzy siedzą wyżej, przy hasłach ze swojego modułu — możesz je odtworzyć prosto z tej strony, ile razy chcesz.</span></div>
       <div class="row"><span class="k">Zadania</span><span class="v">Zestaw na weekend wisi na Teamsach. Rób na spokojnie — chodzi o to, żeby dotknąć samemu, nie o ideał.</span></div>
     </div>
