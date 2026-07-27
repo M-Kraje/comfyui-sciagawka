@@ -196,6 +196,50 @@
   .prof .h { font-family: "Cascadia Code", Consolas, monospace; font-weight: 650; font-size: var(--fs-code); }
   .prof p { margin: 5px 0 0; font-size: var(--fs-small); color: var(--ink-soft); }
 
+  /* karuzela arkuszy denoise */
+  .kar { margin-top: 20px; }
+  .kar-ramka {
+    position: relative; background: var(--node); border: 1px solid var(--edge); border-radius: 9px;
+    box-shadow: var(--shadow); overflow: hidden; touch-action: pan-y;
+  }
+  .kar-tor { display: flex; transition: transform .32s cubic-bezier(.3,.7,.3,1); }
+  @media (prefers-reduced-motion: reduce) { .kar-tor { transition: none; } }
+  .kar-slajd { flex: 0 0 100%; min-width: 0; }
+  .kar-slajd img { display: block; width: 100%; height: auto; cursor: zoom-in; }
+  .kar-pasek {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    margin-top: 12px; font-family: "Cascadia Code", Consolas, ui-monospace, monospace; font-size: var(--fs-micro);
+  }
+  .kar-btn {
+    background: var(--node); color: var(--ink); border: 1px solid var(--edge); border-radius: 6px;
+    padding: 7px 13px; cursor: pointer; font: inherit; box-shadow: var(--shadow);
+  }
+  .kar-btn:hover:not(:disabled) { background: var(--chip); }
+  .kar-btn:disabled { opacity: .4; cursor: default; }
+  .kar-btn:focus-visible, .kar-slajd img:focus-visible { outline: 2px solid var(--w-image); outline-offset: 2px; }
+  .kar-kropki { display: flex; gap: 8px; margin-left: auto; }
+  .kar-kropka {
+    width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--edge);
+    background: transparent; padding: 0; cursor: pointer;
+  }
+  .kar-kropka[aria-current="true"] { background: var(--w-latent); border-color: var(--w-latent); }
+  .kar-nazwa { color: var(--w-latent); font-weight: 600; }
+  .kar-lupa { color: var(--ink-faint); }
+
+  /* powiększenie do pełnego rozmiaru */
+  .lupa {
+    position: fixed; inset: 0; z-index: 100; background: rgba(10,11,14,.94);
+    display: none; align-items: center; justify-content: center; padding: 24px; overflow: auto;
+  }
+  .lupa[open], .lupa.otwarta { display: flex; }
+  .lupa img { max-width: 100%; height: auto; border-radius: 4px; }
+  .lupa-zamknij {
+    position: fixed; top: 16px; right: 16px; z-index: 101;
+    background: var(--node); color: var(--ink); border: 1px solid var(--edge); border-radius: 6px;
+    padding: 9px 15px; cursor: pointer; box-shadow: var(--shadow);
+    font-family: "Cascadia Code", Consolas, ui-monospace, monospace; font-size: var(--fs-micro);
+  }
+
   footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--edge); font-size: var(--fs-small); color: var(--ink-faint); }
 
   /* przełącznik motywu — widget węzła, nie pigułka słońce/księżyc */
@@ -431,6 +475,31 @@
   </section>
 
   <section>
+    <span class="eyebrow">denoise w praktyce</span>
+    <h2>Ile oryginału przeżywa</h2>
+    <p class="intro">Trzy razy to samo doświadczenie: jedno zdjęcie na wejściu, jeden prompt, jeden stały seed. Zmienia się wyłącznie <span class="mono">denoise</span>. Liczba mówi, jaką część obrazu oddajesz modelowi — <b>0.1 to dziesięć procent, 0.5 to połowa</b>. Przewiń w bok, kliknij żeby powiększyć.</p>
+
+    <div class="kar">
+      <div class="kar-ramka" id="kar-ramka">
+        <div class="kar-tor" id="kar-tor">
+          <div class="kar-slajd"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-portret.jpg" alt="Skala denoise: portret kobiety zmienia się w portret Afrykanki, dziewięć wartości od 0.1 do 0.9" tabindex="0" width="1160" height="1267" /></div>
+          <div class="kar-slajd"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-lalka.jpg" alt="Skala denoise: plastikowa lalka zmienia się w potwora, dziewięć wartości od 0.1 do 0.9" loading="lazy" tabindex="0" width="1160" height="1267" /></div>
+          <div class="kar-slajd"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-resorak.jpg" alt="Skala denoise: resorak zmienia się w Lamborghini, dziewięć wartości od 0.1 do 0.9" loading="lazy" tabindex="0" width="1160" height="1267" /></div>
+        </div>
+      </div>
+      <div class="kar-pasek">
+        <button class="kar-btn" id="kar-prev" type="button" aria-label="Poprzedni arkusz">←</button>
+        <button class="kar-btn" id="kar-next" type="button" aria-label="Następny arkusz">→</button>
+        <span class="kar-nazwa" id="kar-nazwa">portret · próg 0.5–0.6</span>
+        <span class="kar-lupa">klik = pełny rozmiar</span>
+        <span class="kar-kropki" id="kar-kropki" role="tablist" aria-label="Wybór arkusza"></span>
+      </div>
+    </div>
+
+    <p class="soon"><b>Próg nie jest stały.</b> Lalka łamie się już przy 0.4, portret koło 0.5, a resorak trzyma się swojego kształtu aż do 0.7. Im dalej prompt od zdjęcia, tym więcej trzeba oddać, żeby model odpuścił oryginał.</p>
+  </section>
+
+  <section>
     <span class="eyebrow">materiały</span>
     <h2>Gdzie i jak pracujecie</h2>
     <div class="cards">
@@ -464,5 +533,99 @@
 
   <footer>Ściągawka do szkolenia ComfyUI · aktualizowana z każdym modułem.</footer>
 </div>
+
+<div class="lupa" id="lupa" role="dialog" aria-modal="true" aria-label="Podgląd w pełnym rozmiarze">
+  <button class="lupa-zamknij" id="lupa-zamknij" type="button">zamknij ✕</button>
+  <img id="lupa-img" src="" alt="" />
+</div>
+
+<script>
+  (function () {
+    var tor = document.getElementById("kar-tor");
+    if (!tor) return;
+    var slajdy = tor.children;
+    var ile = slajdy.length;
+    var nazwy = ["portret · próg 0.5–0.6", "lalka · próg 0.4", "resorak · próg 0.7"];
+    var i = 0;
+
+    var prev = document.getElementById("kar-prev");
+    var next = document.getElementById("kar-next");
+    var nazwa = document.getElementById("kar-nazwa");
+    var kropki = document.getElementById("kar-kropki");
+
+    for (var k = 0; k < ile; k++) {
+      (function (n) {
+        var b = document.createElement("button");
+        b.className = "kar-kropka";
+        b.type = "button";
+        b.setAttribute("aria-label", "Arkusz " + (n + 1));
+        b.addEventListener("click", function () { idz(n); });
+        kropki.appendChild(b);
+      })(k);
+    }
+
+    function idz(n) {
+      i = Math.max(0, Math.min(ile - 1, n));
+      tor.style.transform = "translateX(" + (-i * 100) + "%)";
+      nazwa.textContent = nazwy[i] || "";
+      prev.disabled = i === 0;
+      next.disabled = i === ile - 1;
+      var d = kropki.children;
+      for (var j = 0; j < d.length; j++) d[j].setAttribute("aria-current", j === i ? "true" : "false");
+    }
+    prev.addEventListener("click", function () { idz(i - 1); });
+    next.addEventListener("click", function () { idz(i + 1); });
+
+    // przeciąganie palcem i myszą
+    var ramka = document.getElementById("kar-ramka");
+    var x0 = null, y0 = null;
+    ramka.addEventListener("pointerdown", function (e) { x0 = e.clientX; y0 = e.clientY; });
+    ramka.addEventListener("pointerup", function (e) {
+      if (x0 === null) return;
+      var dx = e.clientX - x0, dy = e.clientY - y0;
+      x0 = null;
+      // poziomy gest, nie pionowe przewijanie strony
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { idz(dx < 0 ? i + 1 : i - 1); }
+    });
+    ramka.addEventListener("pointercancel", function () { x0 = null; });
+
+    // strzałki na klawiaturze, gdy karuzela ma fokus
+    ramka.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { idz(i + 1); e.preventDefault(); }
+      if (e.key === "ArrowLeft") { idz(i - 1); e.preventDefault(); }
+    });
+
+    // powiększenie do pełnego rozmiaru
+    var lupa = document.getElementById("lupa");
+    var lupaImg = document.getElementById("lupa-img");
+    var ostatniFokus = null;
+    function otworz(src, alt) {
+      ostatniFokus = document.activeElement;
+      lupaImg.src = src; lupaImg.alt = alt || "";
+      lupa.classList.add("otwarta");
+      document.getElementById("lupa-zamknij").focus();
+    }
+    function zamknij() {
+      lupa.classList.remove("otwarta");
+      lupaImg.src = "";
+      if (ostatniFokus) ostatniFokus.focus();
+    }
+    for (var m = 0; m < ile; m++) {
+      (function (el) {
+        el.addEventListener("click", function () { otworz(el.src, el.alt); });
+        el.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") { otworz(el.src, el.alt); e.preventDefault(); }
+        });
+      })(slajdy[m].querySelector("img"));
+    }
+    document.getElementById("lupa-zamknij").addEventListener("click", zamknij);
+    lupa.addEventListener("click", function (e) { if (e.target === lupa) zamknij(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && lupa.classList.contains("otwarta")) zamknij();
+    });
+
+    idz(0);
+  })();
+</script>
 </body>
 </html>
