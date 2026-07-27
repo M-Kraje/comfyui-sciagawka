@@ -128,8 +128,8 @@
 
   section { margin-top: 54px; }
   /* skok do kotwicy nie może chować nagłówka pod przyklejonym paskiem */
-  section[id] { scroll-margin-top: 64px; }
-  @media (min-width: 1180px) { section[id] { scroll-margin-top: 20px; } }
+  section[id], .group[id] { scroll-margin-top: 64px; }
+  @media (min-width: 1180px) { section[id], .group[id] { scroll-margin-top: 20px; } }
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   h2 { font-size: 1.375rem; font-weight: 720; letter-spacing: -.01em; margin: 8px 0 6px; text-wrap: balance; }
@@ -448,7 +448,9 @@
     <div class="naw-tyt">na tej stronie</div>
     <ol>
       <li><a href="#start">Zanim zaczniesz</a></li>
-      <li><a href="#slowniczek">Nazwy z filmów</a></li>
+      <li><a href="#m1">M1 · od promptu do wyniku</a></li>
+      <li><a href="#m2">M2 · a co jest w środku</a></li>
+      <li><a href="#m3">M3 · dlaczego to działa</a></li>
       <li><a href="#denoise">Skala denoise</a></li>
       <li><a href="#materialy">Materiały</a></li>
       <li><a href="#linki">Linki i profile</a></li>
@@ -472,7 +474,7 @@
     <h2>Nazwy z filmów</h2>
     <p class="intro">Nazwy zostawiam po angielsku — tak są w interfejsie i tak najłatwiej je zapamiętać. Po polsku tylko wyjaśnienie. Pogrupowane wg modułu, żeby łatwo było wrócić do właściwego filmu.</p>
 
-    <div class="group" style="--gc:var(--w-clip)">
+    <div class="group" id="m1" style="--gc:var(--w-clip)">
       <span class="lbl">od promptu do wyniku <span class="mod">· moduł 1</span></span>
       <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m1.jpg">
         <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m1.mp4" type="video/mp4" />
@@ -489,7 +491,7 @@
       </dl>
     </div>
 
-    <div class="group" style="--gc:var(--w-model)">
+    <div class="group" id="m2" style="--gc:var(--w-model)">
       <span class="lbl">a co jest w środku <span class="mod">· moduł 2</span></span>
       <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m2.jpg">
         <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m2.mp4" type="video/mp4" />
@@ -508,7 +510,7 @@
       </dl>
     </div>
 
-    <div class="group" style="--gc:var(--w-latent)">
+    <div class="group" id="m3" style="--gc:var(--w-latent)">
       <span class="lbl">dlaczego to działa <span class="mod">· moduł 3</span></span>
       <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m3.jpg">
         <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m3.mp4" type="video/mp4" />
