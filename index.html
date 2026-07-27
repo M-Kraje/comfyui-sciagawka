@@ -171,6 +171,22 @@
   .soon b { color: var(--ink); }
   .soon .mono { color: var(--ink); }
 
+  .praktyka {
+    margin-top: 20px; padding: 16px 20px; background: var(--node);
+    border: 1px solid var(--edge); border-left: 3px solid var(--w-image); border-radius: 9px;
+    box-shadow: var(--shadow); font-size: var(--fs-body); color: var(--ink-soft);
+  }
+  .praktyka b { color: var(--ink); font-weight: 600; }
+  .praktyka .naglowek {
+    display: block; font-family: "Cascadia Code", Consolas, ui-monospace, monospace;
+    font-size: var(--fs-micro); letter-spacing: .06em; text-transform: uppercase;
+    color: var(--w-image); font-weight: 600; margin-bottom: 9px;
+  }
+  .praktyka ol { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 7px; }
+  .praktyka li::marker { color: var(--w-image); font-weight: 600; }
+  .praktyka .domknij { margin: 12px 0 0; }
+  .soon .mono, .praktyka .mono { overflow-wrap: anywhere; }
+
   /* materials / links cards */
   .cards { display: grid; gap: 12px; }
   .row {
@@ -537,6 +553,7 @@
       Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m4.mp4">Pobierz go tutaj</a>.
     </video>
     <div class="vid-meta"><span class="t">moduł 4</span><span>3:00</span><span>obraz na wejściu — Load Image, VAE Encode i suwak denoise</span></div>
+    <p class="soon"><b>Ten moduł ma własny workflow.</b> W <b>bookmarks</b> wybierz <span class="mono">szkolenie_image_krea2_turbo_img2img</span> — to osobny plik obok znanego z poprzednich modułów <span class="mono">szkolenie_image_krea2_turbo_t2i</span>. t2i generuje od zera, img2img startuje z Twojego zdjęcia.</p>
     <p class="intro">Trzy razy to samo doświadczenie: jedno zdjęcie na wejściu, jeden prompt, jeden stały seed. Zmienia się wyłącznie <span class="mono">denoise</span>. Liczba mówi, jaką część obrazu oddajesz modelowi — <b>0.1 to dziesięć procent, 0.5 to połowa</b>. Przewiń w bok, kliknij żeby powiększyć.</p>
 
     <div class="kar">
@@ -557,6 +574,18 @@
     </div>
 
     <p class="soon"><b>Próg nie jest stały.</b> Lalka łamie się już przy 0.4, portret koło 0.5, a resorak trzyma się swojego kształtu aż do 0.7. Im dalej prompt od zdjęcia, tym więcej trzeba oddać, żeby model odpuścił oryginał.</p>
+
+    <div class="praktyka">
+      <span class="naglowek">zrób to u siebie</span>
+      <b>Film pokazuje, gdzie kliknąć i co robi suwak. Reszty nie da się przeczytać.</b> ComfyUI jest jak prowadzenie samochodu albo pływanie — dopiero własne zdjęcie i własny prompt pokazują, o co w tym chodzi.
+      <ol>
+        <li>Otwórz <span class="mono">szkolenie_image_krea2_turbo_img2img</span> z bookmarks.</li>
+        <li>Wrzuć do <span class="mono">Load Image</span> zdjęcie, które dobrze znasz — wtedy od razu widać, co model zmienił.</li>
+        <li>W promptcie opisz <b>cały obraz, jaki ma powstać</b>, a nie samą zmianę.</li>
+        <li>Przejedź <span class="mono">denoise</span>: 0.3, potem 0.5, potem 0.7. Zapamiętaj, przy której wartości zdjęcie przestało być Twoje.</li>
+      </ol>
+      <p class="domknij">Ta wartość będzie inna dla każdego zdjęcia i każdego promptu. Znalezienie jej u siebie jest całym zadaniem.</p>
+    </div>
   </section>
 
   <section id="materialy">
