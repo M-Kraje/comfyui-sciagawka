@@ -127,6 +127,11 @@
   .start .uwaga b { color: var(--ink); font-weight: 600; }
 
   section { margin-top: 54px; }
+  /* skok do kotwicy nie może chować nagłówka pod przyklejonym paskiem */
+  section[id] { scroll-margin-top: 64px; }
+  @media (min-width: 1180px) { section[id] { scroll-margin-top: 20px; } }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   h2 { font-size: 1.375rem; font-weight: 720; letter-spacing: -.01em; margin: 8px 0 6px; text-wrap: balance; }
   section > .intro { color: var(--ink-soft); max-width: 64ch; margin: 0 0 22px; font-size: var(--fs-body); }
 
@@ -195,6 +200,42 @@
   }
   .prof .h { font-family: "Cascadia Code", Consolas, monospace; font-weight: 650; font-size: var(--fs-code); }
   .prof p { margin: 5px 0 0; font-size: var(--fs-small); color: var(--ink-soft); }
+
+  /* nawigacja — szyna z lewej na szerokich ekranach, przyklejony pasek na wąskich */
+  .naw { font-family: "Cascadia Code", Consolas, ui-monospace, monospace; }
+  .naw ol { list-style: none; margin: 0; padding: 0; }
+  .naw a {
+    display: block; padding: 7px 10px; border-radius: 6px; border-bottom: none;
+    font-size: var(--fs-micro); letter-spacing: .04em; color: var(--ink-faint); white-space: nowrap;
+  }
+  .naw a:hover { color: var(--ink); background: var(--chip); border-bottom: none; }
+  .naw a[aria-current="true"] { color: var(--w-image); background: var(--chip); font-weight: 600; }
+  .naw a:focus-visible { outline: 2px solid var(--w-image); outline-offset: 2px; }
+  .naw .naw-tyt {
+    font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-faint); opacity: .7; padding: 0 10px 8px;
+  }
+
+  /* wąskie ekrany: pasek pod górną krawędzią, przewijany w poziomie */
+  .naw {
+    position: sticky; top: 0; z-index: 40; margin: 0 -24px 26px; padding: 10px 24px;
+    background: var(--canvas); border-bottom: 1px solid var(--edge);
+  }
+  .naw .naw-tyt { display: none; }
+  .naw ol { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+  .naw ol::-webkit-scrollbar { display: none; }
+  .naw li { flex: none; }
+
+  @media (min-width: 1180px) {
+    .naw {
+      position: fixed; top: 52px; left: max(16px, calc(50% - 410px - 210px));
+      width: 190px; margin: 0; padding: 0; background: transparent; border-bottom: none;
+    }
+    .naw .naw-tyt { display: block; }
+    .naw ol { display: block; overflow: visible; }
+    .naw li { flex: initial; }
+    .naw a { white-space: normal; }
+  }
 
   /* karuzela arkuszy denoise */
   .kar { margin-top: 20px; }
@@ -403,7 +444,18 @@
     <p class="pipe-cap">Cała ścieżka od tekstu do pliku. Prompt i szum nie stoją w kolejce — dochodzą do KSamplera osobnymi kablami i dopiero tam się spotykają. Kolory kabli są takie same jak w ComfyUI, więc po nich rozpoznasz, co gdzie pasuje.</p>
   </header>
 
-  <section class="start">
+  <nav class="naw" aria-label="Spis treści">
+    <div class="naw-tyt">na tej stronie</div>
+    <ol>
+      <li><a href="#start">Zanim zaczniesz</a></li>
+      <li><a href="#slowniczek">Nazwy z filmów</a></li>
+      <li><a href="#denoise">Skala denoise</a></li>
+      <li><a href="#materialy">Materiały</a></li>
+      <li><a href="#linki">Linki i profile</a></li>
+    </ol>
+  </nav>
+
+  <section class="start" id="start">
     <span class="eyebrow">zanim zaczniesz</span>
     <h2>Jak w ogóle wejść</h2>
     <p>Trzy kroki i jesteś w środku. Jeśli coś ma Cię zatrzymać, to zatrzyma Cię tutaj, więc zaczynamy właśnie od tego.</p>
@@ -415,7 +467,7 @@
     <p class="uwaga"><b>Wylogowuje Cię co jakiś czas i to normalne.</b> Nie znaczy, że coś zepsułeś ani że straciłeś dostęp. Logujesz się ponownie tymi samymi danymi i wracasz do pracy. Jeśli po zalogowaniu nie widzisz template'u, odśwież stronę.</p>
   </section>
 
-  <section>
+  <section id="slowniczek">
     <span class="eyebrow">słowniczek</span>
     <h2>Nazwy z filmów</h2>
     <p class="intro">Nazwy zostawiam po angielsku — tak są w interfejsie i tak najłatwiej je zapamiętać. Po polsku tylko wyjaśnienie. Pogrupowane wg modułu, żeby łatwo było wrócić do właściwego filmu.</p>
@@ -474,7 +526,7 @@
     <p class="soon">Wkrótce dojdą hasła z kolejnych modułów: <span class="mono">img2img</span>, <span class="mono">denoise</span> w praktyce, <span class="mono">LoRA</span>, two-pass (podwójny sampler).</p>
   </section>
 
-  <section>
+  <section id="denoise">
     <span class="eyebrow">denoise w praktyce</span>
     <h2>Ile oryginału przeżywa</h2>
     <p class="intro">Trzy razy to samo doświadczenie: jedno zdjęcie na wejściu, jeden prompt, jeden stały seed. Zmienia się wyłącznie <span class="mono">denoise</span>. Liczba mówi, jaką część obrazu oddajesz modelowi — <b>0.1 to dziesięć procent, 0.5 to połowa</b>. Przewiń w bok, kliknij żeby powiększyć.</p>
@@ -499,7 +551,7 @@
     <p class="soon"><b>Próg nie jest stały.</b> Lalka łamie się już przy 0.4, portret koło 0.5, a resorak trzyma się swojego kształtu aż do 0.7. Im dalej prompt od zdjęcia, tym więcej trzeba oddać, żeby model odpuścił oryginał.</p>
   </section>
 
-  <section>
+  <section id="materialy">
     <span class="eyebrow">materiały</span>
     <h2>Gdzie i jak pracujecie</h2>
     <div class="cards">
@@ -508,7 +560,7 @@
     </div>
   </section>
 
-  <section>
+  <section id="linki">
     <span class="eyebrow">linki i profile</span>
     <h2>Do pracy i do podglądania</h2>
     <p class="intro">Najwięcej nauczysz się, patrząc jak promptują inni. Civitai to do tego kopalnia — przy każdym obrazie widać użyty prompt i ustawienia, a z czasem znajdziesz tam też LoRy do pobrania.</p>
@@ -540,6 +592,42 @@
 </div>
 
 <script>
+  // podświetlanie aktualnej sekcji w nawigacji
+  (function () {
+    var linki = [].slice.call(document.querySelectorAll(".naw a"));
+    if (!linki.length) return;
+    var sekcje = linki.map(function (a) { return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+    function zaznacz(el) {
+      linki.forEach(function (a) {
+        var jest = el && a.getAttribute("href") === "#" + el.id;
+        a.setAttribute("aria-current", jest ? "true" : "false");
+        if (jest && window.innerWidth < 1180 && a.parentNode.parentNode.scrollWidth > a.parentNode.parentNode.clientWidth) {
+          a.parentNode.parentNode.scrollTo({ left: a.offsetLeft - 40, behavior: "smooth" });
+        }
+      });
+    }
+    // wybieramy ostatnią sekcję, której początek minął linię odczytu —
+    // kryterium powierzchni myliło się przy bardzo wysokich sekcjach (karuzela)
+    var bieg = null, czeka = false;
+    function policz() {
+      czeka = false;
+      var linia = 100, wybrana = sekcje[0];
+      for (var j = 0; j < sekcje.length; j++) {
+        if (sekcje[j].getBoundingClientRect().top - linia <= 0) wybrana = sekcje[j];
+      }
+      // na samym dole strony zawsze ostatnia pozycja
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+        wybrana = sekcje[sekcje.length - 1];
+      }
+      if (wybrana !== bieg) { bieg = wybrana; zaznacz(wybrana); }
+    }
+    window.addEventListener("scroll", function () {
+      if (!czeka) { czeka = true; window.requestAnimationFrame(policz); }
+    }, { passive: true });
+    window.addEventListener("resize", policz, { passive: true });
+    policz();
+  })();
+
   (function () {
     var tor = document.getElementById("kar-tor");
     if (!tor) return;
