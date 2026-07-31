@@ -564,15 +564,15 @@
     <div class="kar">
       <div class="kar-ramka" id="kar-ramka">
         <div class="kar-tor" id="kar-tor">
-          <div class="kar-slajd"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-portret.jpg" alt="Skala denoise: portret kobiety zmienia się w portret Afrykanki, dziewięć wartości od 0.1 do 0.9" tabindex="0" width="1160" height="1267" /></div>
-          <div class="kar-slajd"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-lalka.jpg" alt="Skala denoise: plastikowa lalka zmienia się w potwora, dziewięć wartości od 0.1 do 0.9" loading="lazy" tabindex="0" width="1160" height="1267" /></div>
-          <div class="kar-slajd"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-resorak.jpg" alt="Skala denoise: resorak zmienia się w Lamborghini, dziewięć wartości od 0.1 do 0.9" loading="lazy" tabindex="0" width="1160" height="1267" /></div>
+          <div class="kar-slajd" data-nazwa="portret · próg 0.5–0.6"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-portret.jpg" alt="Skala denoise: portret kobiety zmienia się w portret Afrykanki, dziewięć wartości od 0.1 do 0.9" tabindex="0" width="1160" height="1267" /></div>
+          <div class="kar-slajd" data-nazwa="lalka · próg 0.4"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-lalka.jpg" alt="Skala denoise: plastikowa lalka zmienia się w potwora, dziewięć wartości od 0.1 do 0.9" loading="lazy" tabindex="0" width="1160" height="1267" /></div>
+          <div class="kar-slajd" data-nazwa="resorak · próg 0.7"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/denoise-resorak.jpg" alt="Skala denoise: resorak zmienia się w Lamborghini, dziewięć wartości od 0.1 do 0.9" loading="lazy" tabindex="0" width="1160" height="1267" /></div>
         </div>
       </div>
       <div class="kar-pasek">
-        <button class="kar-btn" id="kar-prev" type="button" aria-label="Poprzedni arkusz">←</button>
-        <button class="kar-btn" id="kar-next" type="button" aria-label="Następny arkusz">→</button>
-        <span class="kar-nazwa" id="kar-nazwa">portret · próg 0.5–0.6</span>
+        <button class="kar-btn kar-prev" id="kar-prev" type="button" aria-label="Poprzedni arkusz">←</button>
+        <button class="kar-btn kar-next" id="kar-next" type="button" aria-label="Następny arkusz">→</button>
+        <span class="kar-nazwa" id="kar-nazwa"></span>
         <span class="kar-lupa">klik = pełny rozmiar</span>
         <span class="kar-kropki" id="kar-kropki" role="tablist" aria-label="Wybór arkusza"></span>
       </div>
@@ -642,10 +642,12 @@
       <p class="domknij">Powód: LoRA uczy model rozpoznawać swój styl pod konkretnym hasłem. Bez tego hasła model ma nową umiejętność, ale nie wie, kiedy jej użyć. Plik jest wpięty, tylko nikt go nie zawołał.</p>
     </div>
 
+    <p class="soon"><b>LoRA to w większości dzieło społeczności.</b> Nie robią ich firmy stojące za modelami, tylko pojedynczy pasjonaci — ktoś wytrenował styl, który lubi, i wrzucił za darmo. Stąd bierze się i siła tego ekosystemu, i cały jego bałagan: obok rzeczy dopracowanych leżą pliki bez opisu, bez wyzwalacza w karcie i bez informacji, na jakiej bazie powstały. Podchodźcie do tego jak do undergroundu, bo tym to jest.</p>
+
     <p class="soon"><b>Gdzie szukać hasła.</b> Na karcie modelu na Civitai, w polu <span class="mono">trigger words</span> pod nazwą wersji. Frazę wklejacie na początek promptu, przed opisem obrazu. Uwaga: to pole bywa puste, choć wyzwalacz istnieje — autor po prostu go nie wypełnił. Jeśli nic nie działa mimo pustego pola, poszukajcie frazy w opisie modelu albo w promptach pod przykładowymi obrazami.</p>
 
     <h3 class="podtytul">Wyzwalacze dziewięciu LoRA, które macie na koncie</h3>
-    <p class="intro">To są oficjalne LoRA od twórców Krea 2, dostępne bez pobierania. Każda wymaga swojej frazy.</p>
+    <p class="intro">To są oficjalne LoRA od twórców Krea 2, dostępne bez pobierania. Każda wymaga dopisania frazy do prompta.</p>
     <div class="cards">
       <div class="row"><span class="k">krea2_darkbrush</span><span class="v"><span class="mono">monochrome ink wash style</span></span></div>
       <div class="row"><span class="k">krea2_dotmatrix</span><span class="v"><span class="mono">Monochrome stippling style</span></span></div>
@@ -665,6 +667,28 @@
       <b>Suwak <span class="mono">strength_model</span> nie kończy się na jedynce ani nie zaczyna na zerze.</b> Wartości powyżej 1.0 działają, a przy LoRA zrobionych jako suwaki działają też wartości ujemne — wtedy zero leży w środku skali, nie na jej początku.
       <p class="domknij">Każda LoRA ma przy tym własną krzywą. Jedna narasta płynnie od pierwszego kroku, inna do 0.8 nie robi nic i wchodzi dopiero przy 1.0. Nie ma jednej dobrej wartości — zaczynaj od 0.8 i sprawdzaj.</p>
     </div>
+
+    <h3 class="podtytul">Wszystko, co sprawdziliśmy przy tym module</h3>
+    <p class="intro">Każdy arkusz to jeden prompt i jeden stały seed — zmienia się wyłącznie to, co opisane. Przewiń w bok, kliknij żeby powiększyć.</p>
+    <div class="kar">
+      <div class="kar-ramka">
+        <div class="kar-tor">
+          <div class="kar-slajd" data-nazwa="bez wyzwalacza i z wyzwalaczem"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-wyzwalacz.jpg" alt="Ta sama LoRA przy sile 1.0: bez słowa wyzwalającego zwykłe zdjęcie, ze słowem pełne anime" tabindex="0" width="1920" height="514" /></div>
+          <div class="kar-slajd" data-nazwa="ultra_real · narasta płynnie"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-ultrareal.jpg" alt="Sześć wartości siły dla LoRA ultra_real, zmiana narasta od pierwszego kroku" loading="lazy" tabindex="0" width="1860" height="1006" /></div>
+          <div class="kar-slajd" data-nazwa="Commodore 64 · wchodzi dopiero przy 1.0"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-c64.jpg" alt="Sześć wartości siły dla LoRA Commodore 64, efekt pojawia się dopiero przy pełnej sile" loading="lazy" tabindex="0" width="1860" height="1006" /></div>
+          <div class="kar-slajd" data-nazwa="suwak wagi · od −2 do +2"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-suwak.jpg" alt="Siedem wartości siły od minus dwóch do plus dwóch, zero w środku skali" loading="lazy" tabindex="0" width="1890" height="439" /></div>
+          <div class="kar-slajd" data-nazwa="suwak wagi · 3.0 kontra 0.0"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-przed-po.jpg" alt="Zestawienie dwóch generacji z jednego modelu przy sile 3.0 i 0.0" loading="lazy" tabindex="0" width="1598" height="1392" /></div>
+        </div>
+      </div>
+      <div class="kar-pasek">
+        <button class="kar-btn kar-prev" type="button" aria-label="Poprzedni arkusz">←</button>
+        <button class="kar-btn kar-next" type="button" aria-label="Następny arkusz">→</button>
+        <span class="kar-nazwa"></span>
+        <span class="kar-lupa">klik = pełny rozmiar</span>
+        <span class="kar-kropki" role="tablist" aria-label="Wybór arkusza"></span>
+      </div>
+    </div>
+
   </section>
 
   <section id="materialy">
@@ -745,66 +769,6 @@
   })();
 
   (function () {
-    var tor = document.getElementById("kar-tor");
-    if (!tor) return;
-    var slajdy = tor.children;
-    var ile = slajdy.length;
-    var nazwy = ["portret · próg 0.5–0.6", "lalka · próg 0.4", "resorak · próg 0.7"];
-    var i = 0;
-
-    var prev = document.getElementById("kar-prev");
-    var next = document.getElementById("kar-next");
-    var nazwa = document.getElementById("kar-nazwa");
-    var kropki = document.getElementById("kar-kropki");
-
-    for (var k = 0; k < ile; k++) {
-      (function (n) {
-        var b = document.createElement("button");
-        b.className = "kar-kropka";
-        b.type = "button";
-        b.setAttribute("aria-label", "Arkusz " + (n + 1));
-        b.addEventListener("click", function () { idz(n); });
-        kropki.appendChild(b);
-      })(k);
-    }
-
-    function idz(n) {
-      i = Math.max(0, Math.min(ile - 1, n));
-      tor.style.transform = "translateX(" + (-i * 100) + "%)";
-      nazwa.textContent = nazwy[i] || "";
-      prev.disabled = i === 0;
-      next.disabled = i === ile - 1;
-      var d = kropki.children;
-      for (var j = 0; j < d.length; j++) d[j].setAttribute("aria-current", j === i ? "true" : "false");
-    }
-    prev.addEventListener("click", function () { idz(i - 1); });
-    next.addEventListener("click", function () { idz(i + 1); });
-
-    // przeciąganie palcem i myszą
-    var ramka = document.getElementById("kar-ramka");
-    var x0 = null, y0 = null, bylPrzeciag = false;
-    function start(x, y) { x0 = x; y0 = y; bylPrzeciag = false; }
-    function koniec(x, y) {
-      if (x0 === null) return;
-      var dx = x - x0, dy = y - y0;
-      x0 = null;
-      // poziomy gest, nie pionowe przewijanie strony
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { bylPrzeciag = true; idz(dx < 0 ? i + 1 : i - 1); }
-    }
-    ramka.addEventListener("pointerdown", function (e) { start(e.clientX, e.clientY); });
-    ramka.addEventListener("pointerup", function (e) { koniec(e.clientX, e.clientY); });
-    ramka.addEventListener("pointercancel", function () { x0 = null; });
-    // zapas dla przeglądarek bez pointer events
-    ramka.addEventListener("touchstart", function (e) { var t = e.changedTouches[0]; start(t.clientX, t.clientY); }, { passive: true });
-    ramka.addEventListener("touchend", function (e) { var t = e.changedTouches[0]; koniec(t.clientX, t.clientY); }, { passive: true });
-
-    // strzałki na klawiaturze, gdy karuzela ma fokus
-    ramka.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowRight") { idz(i + 1); e.preventDefault(); }
-      if (e.key === "ArrowLeft") { idz(i - 1); e.preventDefault(); }
-    });
-
-    // powiększenie do pełnego rozmiaru
     var lupa = document.getElementById("lupa");
     var lupaImg = document.getElementById("lupa-img");
     var ostatniFokus = null;
@@ -819,22 +783,78 @@
       lupaImg.src = "";
       if (ostatniFokus) ostatniFokus.focus();
     }
-    for (var m = 0; m < ile; m++) {
-      (function (el) {
-        // przeciągnięcie po obrazie ma przewijać karuzelę, a nie otwierać powiększenie
-        el.addEventListener("click", function () { if (bylPrzeciag) { bylPrzeciag = false; return; } otworz(el.src, el.alt); });
-        el.addEventListener("keydown", function (e) {
-          if (e.key === "Enter" || e.key === " ") { otworz(el.src, el.alt); e.preventDefault(); }
-        });
-      })(slajdy[m].querySelector("img"));
-    }
     document.getElementById("lupa-zamknij").addEventListener("click", zamknij);
     lupa.addEventListener("click", function (e) { if (e.target === lupa) zamknij(); });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && lupa.classList.contains("otwarta")) zamknij();
     });
 
-    idz(0);
+    // każda karuzela na stronie obsługiwana osobno
+    [].slice.call(document.querySelectorAll(".kar")).forEach(function (kar) {
+      var tor = kar.querySelector(".kar-tor");
+      if (!tor) return;
+      var ramka = kar.querySelector(".kar-ramka");
+      var slajdy = tor.children;
+      var ile = slajdy.length;
+      var nazwy = [].slice.call(slajdy).map(function (s) { return s.getAttribute("data-nazwa") || ""; });
+      var prev = kar.querySelector(".kar-prev");
+      var next = kar.querySelector(".kar-next");
+      var nazwa = kar.querySelector(".kar-nazwa");
+      var kropki = kar.querySelector(".kar-kropki");
+      var i = 0, bylPrzeciag = false;
+
+      for (var k = 0; k < ile; k++) {
+        (function (n) {
+          var b = document.createElement("button");
+          b.className = "kar-kropka";
+          b.type = "button";
+          b.setAttribute("aria-label", "Arkusz " + (n + 1));
+          b.addEventListener("click", function () { idz(n); });
+          kropki.appendChild(b);
+        })(k);
+      }
+
+      function idz(n) {
+        i = Math.max(0, Math.min(ile - 1, n));
+        tor.style.transform = "translateX(" + (-i * 100) + "%)";
+        nazwa.textContent = nazwy[i] || "";
+        prev.disabled = i === 0;
+        next.disabled = i === ile - 1;
+        var d = kropki.children;
+        for (var j = 0; j < d.length; j++) d[j].setAttribute("aria-current", j === i ? "true" : "false");
+      }
+      prev.addEventListener("click", function () { idz(i - 1); });
+      next.addEventListener("click", function () { idz(i + 1); });
+
+      var x0 = null, y0 = null;
+      function start(x, y) { x0 = x; y0 = y; bylPrzeciag = false; }
+      function koniec(x, y) {
+        if (x0 === null) return;
+        var dx = x - x0, dy = y - y0;
+        x0 = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { bylPrzeciag = true; idz(dx < 0 ? i + 1 : i - 1); }
+      }
+      ramka.addEventListener("pointerdown", function (e) { start(e.clientX, e.clientY); });
+      ramka.addEventListener("pointerup", function (e) { koniec(e.clientX, e.clientY); });
+      ramka.addEventListener("pointercancel", function () { x0 = null; });
+      ramka.addEventListener("touchstart", function (e) { var t = e.changedTouches[0]; start(t.clientX, t.clientY); }, { passive: true });
+      ramka.addEventListener("touchend", function (e) { var t = e.changedTouches[0]; koniec(t.clientX, t.clientY); }, { passive: true });
+      ramka.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight") { idz(i + 1); e.preventDefault(); }
+        if (e.key === "ArrowLeft") { idz(i - 1); e.preventDefault(); }
+      });
+
+      for (var m = 0; m < ile; m++) {
+        (function (el) {
+          el.addEventListener("click", function () { if (bylPrzeciag) { bylPrzeciag = false; return; } otworz(el.src, el.alt); });
+          el.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { otworz(el.src, el.alt); e.preventDefault(); }
+          });
+        })(slajdy[m].querySelector("img"));
+      }
+
+      idz(0);
+    });
   })();
 </script>
 </body>
