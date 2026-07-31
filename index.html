@@ -164,6 +164,9 @@
     .term { grid-template-columns: 1fr; gap: 2px; }
   }
 
+  #lora .row { grid-template-columns: 210px 1fr; }
+  #lora .row .k { text-transform: none; letter-spacing: 0; }
+  .podtytul { margin: 30px 0 10px; font-size: var(--fs-lead); font-weight: 700; color: var(--ink); }
   .soon {
     margin-top: 18px; padding: 12px 16px; border: 1px dashed var(--edge); border-radius: 8px;
     background: var(--chip); font-size: var(--fs-small); color: var(--ink-soft);
@@ -469,6 +472,7 @@
       <li><a href="#m3">M3 · dlaczego to działa</a></li>
       <li><a href="#denoise">M4 · skala denoise</a></li>
       <li><a href="#porzadki">M5 · porządki na canvasie</a></li>
+      <li><a href="#lora">M6 · LoRA</a></li>
       <li><a href="#materialy">Materiały</a></li>
       <li><a href="#linki">Linki i profile</a></li>
     </ol>
@@ -616,6 +620,34 @@
       <div class="row"><span class="k">bypass</span><span class="v"><span class="mono">Ctrl + B</span> przepuszcza sygnał przez węzeł, jakby go nie było. Wygodne do porównania „z" i „bez".</span></div>
       <div class="row"><span class="k">zapis</span><span class="v"><span class="mono">Ctrl + S</span>. Zapisuj <b>pod własną nazwą</b> — nie nadpisuj pliku szkoleniowego.</span></div>
       <div class="row"><span class="k">wszystkie skróty</span><span class="v"><span class="mono">Ctrl + Shift + K</span> otwiera pełną listę. <span class="mono">Alt +</span> i <span class="mono">Alt -</span> to zoom.</span></div>
+    </div>
+  </section>
+
+  <section id="lora">
+    <span class="eyebrow">moduł 6 · LoRA</span>
+    <h2>Przyprawa do modelu</h2>
+    <p class="intro">LoRA to mały plik, który przechyla model w jedną stronę — dokłada mu styl albo umiejętność, których sam nie ma. W grafie to jeden węzeł na drodze modelu: kabel idzie z loadera przez <span class="mono">Load LoRA</span> do KSamplera. Dwa pola: który plik i jak mocno.</p>
+
+    <div class="praktyka">
+      <span class="naglowek">„wpiąłem LoRA i nic się nie dzieje"</span>
+      <b>To jest pierwsza rzecz, o którą się potkniecie, i nie znaczy, że coś zepsuliście.</b> Plik jest wpięty, suwak na maksimum, a obraz wychodzi taki sam jak bez niego. Zdarza się to przy większości LoRA stylowych.
+      <p class="domknij">Powód: LoRA uczy model rozpoznawać swój styl pod konkretnym hasłem. Bez tego hasła model ma nową umiejętność, ale nie wie, kiedy jej użyć. Plik jest wpięty, tylko nikt go nie zawołał.</p>
+    </div>
+
+    <p class="soon"><b>Gdzie szukać hasła.</b> Na karcie modelu na Civitai, w polu <span class="mono">trigger words</span> pod nazwą wersji. Frazę wklejacie na początek promptu, przed opisem obrazu. Uwaga: to pole bywa puste, choć wyzwalacz istnieje — autor po prostu go nie wypełnił. Jeśli nic nie działa mimo pustego pola, poszukajcie frazy w opisie modelu albo w promptach pod przykładowymi obrazami.</p>
+
+    <h3 class="podtytul">Wyzwalacze dziewięciu LoRA, które macie na koncie</h3>
+    <p class="intro">To są oficjalne LoRA od twórców Krea 2, dostępne bez pobierania. Każda wymaga swojej frazy.</p>
+    <div class="cards">
+      <div class="row"><span class="k">krea2_darkbrush</span><span class="v"><span class="mono">monochrome ink wash style</span></span></div>
+      <div class="row"><span class="k">krea2_dotmatrix</span><span class="v"><span class="mono">Monochrome stippling style</span></span></div>
+      <div class="row"><span class="k">krea2_kidsdrawing</span><span class="v"><span class="mono">naive expressive sketch style</span></span></div>
+      <div class="row"><span class="k">krea2_neondrip</span><span class="v"><span class="mono">Textured abstract style</span></span></div>
+      <div class="row"><span class="k">krea2_rainywindow</span><span class="v"><span class="mono">rainy window style</span></span></div>
+      <div class="row"><span class="k">krea2_retroanime</span><span class="v"><span class="mono">Purple retro anime style</span></span></div>
+      <div class="row"><span class="k">krea2_softwatercolor</span><span class="v"><span class="mono">Art Deco watercolor style</span></span></div>
+      <div class="row"><span class="k">krea2_sunsetblur</span><span class="v"><span class="mono">ethereal motion blur style</span></span></div>
+      <div class="row"><span class="k">krea2_vintagetarot</span><span class="v"><span class="mono">vintage tarot style</span></span></div>
     </div>
   </section>
 
