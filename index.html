@@ -468,6 +468,7 @@
       <li><a href="#m2">M2 · a co jest w środku</a></li>
       <li><a href="#m3">M3 · dlaczego to działa</a></li>
       <li><a href="#denoise">M4 · skala denoise</a></li>
+      <li><a href="#porzadki">M5 · porządki na canvasie</a></li>
       <li><a href="#materialy">Materiały</a></li>
       <li><a href="#linki">Linki i profile</a></li>
     </ol>
@@ -585,6 +586,35 @@
         <li>Przejedź <span class="mono">denoise</span>: 0.3, potem 0.5, potem 0.7. Zapamiętaj, przy której wartości zdjęcie przestało być Twoje.</li>
       </ol>
       <p class="domknij">Ta wartość będzie inna dla każdego zdjęcia i każdego promptu. Znalezienie jej u siebie jest całym zadaniem.</p>
+    </div>
+  </section>
+
+  <section id="porzadki">
+    <span class="eyebrow">moduł 5 · porządki</span>
+    <h2>Canvas do ogarnięcia</h2>
+    <p class="intro">Workflow, który dostajecie, ułożył ktoś inny. Zanim cokolwiek do niego dołożycie, warto zrobić sobie miejsce. Film pokazuje każdy ruch na żywym canvasie — przesuwanie, zwijanie, skalowanie, grupowanie.</p>
+
+    <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m5.jpg">
+      <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m5.mp4" type="video/mp4" />
+      Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m5.mp4">Pobierz go tutaj</a>.
+    </video>
+    <div class="vid-meta"><span class="t">moduł 5</span><span>2:03</span><span>przesuwanie, zwijanie, skalowanie, grupy i bypass</span></div>
+
+    <div class="praktyka">
+      <span class="naglowek">to jest tylko kosmetyka</span>
+      <b>Układ na canvasie nie ma żadnego wpływu na wynik.</b> Workflow wykonuje się w kolejności połączeń, a nie według tego, co gdzie leży. Możecie poprzestawiać wszystkie węzły na drugi koniec ekranu i obraz wyjdzie dokładnie taki sam — liczy się wyłącznie to, co jest z czym połączone kablem.
+      <p class="domknij">Porządkujecie więc dla siebie, żeby się w tym połapać i mieć gdzie dołożyć kolejny węzeł. Program i tak patrzy tylko na kable.</p>
+    </div>
+
+    <div class="cards">
+      <div class="row"><span class="k">przesuwanie</span><span class="v">Węzeł chwytasz za <b>belkę z nazwą</b>. Kilka naraz bierzesz ramką, przeciągając po pustym tle — zaznaczone jadą razem.</span></div>
+      <div class="row"><span class="k">zwijanie</span><span class="v"><b>Kropka przy nazwie</b> zwija węzeł do paska i rozwija z powrotem. Nic nie znika i nic się nie rozłącza.</span></div>
+      <div class="row"><span class="k">rozmiar</span><span class="v"><b>Prawy dolny róg</b> rozciąga i zmniejsza. Pole promptu potrafi zajmować pół ekranu bez powodu.</span></div>
+      <div class="row"><span class="k">kropka</span><span class="v"><b>Kropka</b> na klawiaturze wraca do widoku węzłów, kiedy zjedziesz w pustkę. Z zaznaczonym węzłem przybliża do niego.</span></div>
+      <div class="row"><span class="k">grupa</span><span class="v"><span class="mono">Ctrl + G</span> robi z zaznaczenia nazwaną ramkę. Ciągniesz ramkę, jedzie cała zawartość.</span></div>
+      <div class="row"><span class="k">bypass</span><span class="v"><span class="mono">Ctrl + B</span> przepuszcza sygnał przez węzeł, jakby go nie było. Wygodne do porównania „z" i „bez".</span></div>
+      <div class="row"><span class="k">zapis</span><span class="v"><span class="mono">Ctrl + S</span>. Zapisuj <b>pod własną nazwą</b> — nie nadpisuj pliku szkoleniowego.</span></div>
+      <div class="row"><span class="k">wszystkie skróty</span><span class="v"><span class="mono">Ctrl + Shift + K</span> otwiera pełną listę. <span class="mono">Alt +</span> i <span class="mono">Alt -</span> to zoom.</span></div>
     </div>
   </section>
 
