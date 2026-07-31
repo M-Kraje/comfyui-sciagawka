@@ -166,6 +166,9 @@
 
   #lora .row { grid-template-columns: 210px 1fr; }
   #lora .row .k { text-transform: none; letter-spacing: 0; }
+  .fig { margin: 16px 0 0; }
+  .fig img { display: block; width: 100%; height: auto; border: 1px solid var(--edge); border-radius: 10px; cursor: zoom-in; }
+  .fig img:focus-visible { outline: 2px solid var(--w-image); outline-offset: 2px; }
   .podtytul { margin: 30px 0 10px; font-size: var(--fs-lead); font-weight: 700; color: var(--ink); }
   .soon {
     margin-top: 18px; padding: 12px 16px; border: 1px dashed var(--edge); border-radius: 8px;
@@ -668,26 +671,12 @@
       <p class="domknij">Każda LoRA ma przy tym własną krzywą. Jedna narasta płynnie od pierwszego kroku, inna do 0.8 nie robi nic i wchodzi dopiero przy 1.0. Nie ma jednej dobrej wartości — zaczynaj od 0.8 i sprawdzaj.</p>
     </div>
 
-    <h3 class="podtytul">Wszystko, co sprawdziliśmy przy tym module</h3>
-    <p class="intro">Każdy arkusz to jeden prompt i jeden stały seed — zmienia się wyłącznie to, co opisane. Przewiń w bok, kliknij żeby powiększyć.</p>
-    <div class="kar">
-      <div class="kar-ramka">
-        <div class="kar-tor">
-          <div class="kar-slajd" data-nazwa="bez wyzwalacza i z wyzwalaczem"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-wyzwalacz.jpg" alt="Ta sama LoRA przy sile 1.0: bez słowa wyzwalającego zwykłe zdjęcie, ze słowem pełne anime" tabindex="0" width="1920" height="514" /></div>
-          <div class="kar-slajd" data-nazwa="ultra_real · narasta płynnie"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-ultrareal.jpg" alt="Sześć wartości siły dla LoRA ultra_real, zmiana narasta od pierwszego kroku" loading="lazy" tabindex="0" width="1860" height="1006" /></div>
-          <div class="kar-slajd" data-nazwa="Commodore 64 · wchodzi dopiero przy 1.0"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-c64.jpg" alt="Sześć wartości siły dla LoRA Commodore 64, efekt pojawia się dopiero przy pełnej sile" loading="lazy" tabindex="0" width="1860" height="1006" /></div>
-          <div class="kar-slajd" data-nazwa="suwak wagi · od −2 do +2"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-suwak.jpg" alt="Siedem wartości siły od minus dwóch do plus dwóch, zero w środku skali" loading="lazy" tabindex="0" width="1890" height="439" /></div>
-          <div class="kar-slajd" data-nazwa="suwak wagi · 3.0 kontra 0.0"><img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-przed-po.jpg" alt="Zestawienie dwóch generacji z jednego modelu przy sile 3.0 i 0.0" loading="lazy" tabindex="0" width="1598" height="1392" /></div>
-        </div>
-      </div>
-      <div class="kar-pasek">
-        <button class="kar-btn kar-prev" type="button" aria-label="Poprzedni arkusz">←</button>
-        <button class="kar-btn kar-next" type="button" aria-label="Następny arkusz">→</button>
-        <span class="kar-nazwa"></span>
-        <span class="kar-lupa">klik = pełny rozmiar</span>
-        <span class="kar-kropki" role="tablist" aria-label="Wybór arkusza"></span>
-      </div>
-    </div>
+    <p class="intro">Zakres powyżej jedynki widać najlepiej na suwaku wagi: ta sama scena i ten sam seed, po lewej siła 3.0, po prawej zero. Kliknij, żeby powiększyć.</p>
+    <figure class="fig">
+      <img class="powieksz" src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/lora-przed-po.jpg"
+           alt="Dwie generacje z jednego modelu przy sile suwaka wagi 3.0 i 0.0" loading="lazy" tabindex="0"
+           width="1598" height="1392" />
+    </figure>
 
   </section>
 
@@ -854,6 +843,14 @@
       }
 
       idz(0);
+    });
+
+    // pojedyncze obrazy poza karuzelą też otwierają się w powiększeniu
+    [].slice.call(document.querySelectorAll("img.powieksz")).forEach(function (el) {
+      el.addEventListener("click", function () { otworz(el.src, el.alt); });
+      el.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { otworz(el.src, el.alt); e.preventDefault(); }
+      });
     });
   })();
 </script>
