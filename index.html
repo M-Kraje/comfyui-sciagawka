@@ -628,6 +628,14 @@
     <h2>Przyprawa do modelu</h2>
     <p class="intro">LoRA to mały plik, który przechyla model w jedną stronę — dokłada mu styl albo umiejętność, których sam nie ma. W grafie to jeden węzeł na drodze modelu: kabel idzie z loadera przez <span class="mono">Load LoRA</span> do KSamplera. Dwa pola: który plik i jak mocno.</p>
 
+    <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m6.jpg">
+      <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m6.mp4" type="video/mp4" />
+      Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m6.mp4">Pobierz go tutaj</a>.
+    </video>
+    <div class="vid-meta"><span class="t">moduł 6</span><span>2:56</span><span>węzeł LoRA, słowa wyzwalające, import z Civitai, siła</span></div>
+
+    <p class="soon"><b>Ten moduł ma własny workflow.</b> W <b>bookmarks</b> wybierz <span class="mono">szkolenie_image_krea2_turbo_p3_lora</span> — to <span class="mono">p2</span> z dołożonym węzłem <span class="mono">Load LoRA</span> na drodze modelu. Reszta bez zmian.</p>
+
     <div class="praktyka">
       <span class="naglowek">„wpiąłem LoRA i nic się nie dzieje"</span>
       <b>To jest pierwsza rzecz, o którą się potkniecie, i nie znaczy, że coś zepsuliście.</b> Plik jest wpięty, suwak na maksimum, a obraz wychodzi taki sam jak bez niego. Zdarza się to przy większości LoRA stylowych.
@@ -648,6 +656,14 @@
       <div class="row"><span class="k">krea2_softwatercolor</span><span class="v"><span class="mono">Art Deco watercolor style</span></span></div>
       <div class="row"><span class="k">krea2_sunsetblur</span><span class="v"><span class="mono">ethereal motion blur style</span></span></div>
       <div class="row"><span class="k">krea2_vintagetarot</span><span class="v"><span class="mono">vintage tarot style</span></span></div>
+    </div>
+
+    <p class="soon"><b>Baza musi się zgadzać.</b> Na karcie modelu sprawdź pole <span class="mono">Base Model</span> — ma być <span class="mono">Krea 2</span>. Jeden wpis potrafi mieć sześć wersji pod sześć różnych modeli, a LoRA zrobiona pod inny model nie zrobi nic albo zrobi breję.</p>
+
+    <div class="praktyka">
+      <span class="naglowek">siła to mnożnik, nie procent</span>
+      <b>Suwak <span class="mono">strength_model</span> nie kończy się na jedynce ani nie zaczyna na zerze.</b> Wartości powyżej 1.0 działają, a przy LoRA zrobionych jako suwaki działają też wartości ujemne — wtedy zero leży w środku skali, nie na jej początku.
+      <p class="domknij">Każda LoRA ma przy tym własną krzywą. Jedna narasta płynnie od pierwszego kroku, inna do 0.8 nie robi nic i wchodzi dopiero przy 1.0. Nie ma jednej dobrej wartości — zaczynaj od 0.8 i sprawdzaj.</p>
     </div>
   </section>
 
