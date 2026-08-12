@@ -476,6 +476,7 @@
       <li><a href="#denoise">M4 · skala denoise</a></li>
       <li><a href="#porzadki">M5 · porządki na canvasie</a></li>
       <li><a href="#lora">M6 · LoRA</a></li>
+      <li><a href="#upscale">M7 · powiększanie</a></li>
       <li><a href="#materialy">Materiały</a></li>
       <li><a href="#linki">Linki i profile</a></li>
     </ol>
@@ -680,6 +681,43 @@
 
   </section>
 
+  <section id="upscale">
+    <span class="eyebrow">moduł 7 · powiększanie</span>
+    <h2>Półtora megapiksela to za mało</h2>
+    <p class="intro">Wasze generacje mają jakieś 1,5 megapiksela. Na ekran wystarczy, ale w layoucie na okładkę albo w druku zobaczycie miękką papkę. <span class="mono">SeedVR2</span> ogląda obraz i dopowiada detal tam, gdzie w pliku była plama pikseli — pory skóry, pojedyncze włosy, fakturę tkaniny.</p>
+
+    <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m7.jpg">
+      <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m7.mp4" type="video/mp4" />
+      Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m7.mp4">Pobierz go tutaj</a>.
+    </video>
+    <div class="vid-meta"><span class="t">moduł 7</span><span>2:12</span><span>trzy węzły, jedno pokrętło, wynik w kilkanaście sekund</span></div>
+
+    <p class="soon"><b>Ten moduł ma własny workflow.</b> W <b>bookmarks</b> wybierz <span class="mono">szkolenie_image_upscale_SeedVR2</span>. Trzy węzły: <span class="mono">Load Image</span>, środkowy silnik i <span class="mono">Save Image</span>. Środkowy to znowu spakowany subgraph — dokładnie jak Krea w pierwszym module.</p>
+
+    <div class="praktyka">
+      <span class="naglowek">mnożnik działa na krawędź, nie na liczbę pikseli</span>
+      <b>To miejsce, w którym liczba potrafi zaskoczyć.</b> Pole <span class="mono">scale_multiplier</span> ustawione na 4 nie daje obrazu cztery razy większego, tylko cztery razy dłuższy bok. Pikseli przybywa do kwadratu, czyli szesnastokrotnie.
+      <p class="domknij">Z 1448 × 1088 przy czwórce robi się 5792 × 4352, czyli z 1,5 megapiksela — dwadzieścia pięć. W druku przy 300 dpi to około 49 × 37 cm, A3 z zapasem.</p>
+    </div>
+
+    <div class="cards">
+      <div class="row"><span class="k">skąd plik</span><span class="v">Wasza generacja, zdjęcie z sesji, archiwalny plik od klienta. <span class="mono">SeedVR2</span> nie pyta, skąd pochodzi obraz.</span></div>
+      <div class="row"><span class="k">mnożnik</span><span class="v"><span class="mono">scale_multiplier</span> — jedyne pokrętło, które musicie ruszyć. Dwójka do podglądu, czwórka do druku.</span></div>
+      <div class="row"><span class="k">ile to trwa</span><span class="v">Przy dwójce kilkanaście sekund. Przy czwórce dłużej, bo obrazu jest szesnaście razy więcej.</span></div>
+      <div class="row"><span class="k">zielona ramka</span><span class="v">Węzeł podświetlony na zielono to ten, który akurat pracuje. Przydaje się w każdym większym workflow.</span></div>
+      <div class="row"><span class="k">czego nie zrobi</span><span class="v">Nie dorysuje rzeczy, których w kadrze nie było. Trzyma się oryginału — twarz zostaje ta sama, tylko ostrzejsza.</span></div>
+    </div>
+
+    <p class="intro">Ten sam kadr, po lewej oryginał powiększony zwyczajnie, po prawej przepuszczony przez <span class="mono">SeedVR2</span>. Kliknij, żeby powiększyć.</p>
+    <figure class="fig">
+      <img class="powieksz" src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/upscale-przed-po.jpg"
+           alt="Kadr podzielony w pionie: po lewej oryginał, po prawej wynik powiększenia SeedVR2" loading="lazy" tabindex="0"
+           width="1500" height="1000" />
+    </figure>
+
+    <p class="soon"><b>Wkrótce moduł ósmy.</b> <span class="mono">Ultimate SD Upscale</span> robi to inaczej: tnie obraz na kafle i każdy przepuszcza przez sampler, więc przy powiększaniu <b>dorysowuje</b> detal, którego w oryginale nie było. Czasem to dokładnie to, czego chcecie, a czasem katastrofa — wraca tam suwak <span class="mono">denoise</span> z modułu czwartego, w nowej roli.</p>
+  </section>
+
   <section id="materialy">
     <span class="eyebrow">materiały</span>
     <h2>Gdzie i jak pracujecie</h2>
@@ -854,5 +892,6 @@
     });
   })();
 </script>
+
 </body>
 </html>
