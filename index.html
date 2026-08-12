@@ -734,21 +734,21 @@
       <div class="row"><span class="k">czego nie zrobi</span><span class="v">Nie dorysuje rzeczy, których w kadrze nie było. Trzyma się oryginału — twarz zostaje ta sama, tylko ostrzejsza.</span></div>
     </div>
 
-    <p class="intro">Ten sam kadr w dwóch wersjach. Przeciągnij uchwyt w bok — po lewej stronie linii oryginał powiększony zwyczajnie, po prawej przepuszczony przez <span class="mono">SeedVR2</span>. Działa też strzałkami po kliknięciu w obraz.</p>
+    <p class="intro">Zbliżenie na rzęsy i skórę pod okiem, w skali zbliżonej do stu procent. <b>Przeciągnij uchwyt w prawo</b>, żeby odsłonić wynik powiększenia — po lewej stronie linii <span class="mono">SeedVR2</span>, po prawej oryginał. Działa też strzałkami po kliknięciu w obraz.</p>
     <div class="porow">
-      <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/upscale-po.jpg"
-           alt="Ten sam kadr po powiększeniu przez SeedVR2 — widoczne pory skóry i pojedyncze rzęsy"
-           width="1500" height="1000" loading="lazy" />
+      <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/upscale-przed.jpg"
+           alt="Zbliżenie na rzęsy powiększone zwyczajnie — rzęsy zlewają się w kreski, skóra bez faktury"
+           width="900" height="620" loading="lazy" />
       <div class="wierzch">
-        <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/upscale-przed.jpg"
-             alt="Ten sam kadr powiększony zwyczajnie — skóra bez faktury, rzęsy rozmyte"
-             width="1500" height="1000" loading="lazy" />
+        <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/upscale-po.jpg"
+             alt="To samo zbliżenie po powiększeniu przez SeedVR2 — pojedyncze rzęsy i widoczne pory skóry"
+             width="900" height="620" loading="lazy" />
       </div>
       <div class="uchwyt" aria-hidden="true"></div>
-      <span class="et l">oryginał</span>
-      <span class="et p">SeedVR2</span>
+      <span class="et l">SeedVR2</span>
+      <span class="et p">oryginał</span>
       <input type="range" min="0" max="100" step="0.5" value="50"
-             aria-label="Porównanie przed i po powiększeniu — przesuń, żeby odsłonić wynik" />
+             aria-label="Porównanie powiększenia — przesuń w prawo, żeby odsłonić wynik SeedVR2" />
     </div>
 
     <p class="soon"><b>Wkrótce moduł ósmy.</b> <span class="mono">Ultimate SD Upscale</span> robi to inaczej: tnie obraz na kafle i każdy przepuszcza przez sampler, więc przy powiększaniu <b>dorysowuje</b> detal, którego w oryginale nie było. Czasem to dokładnie to, czego chcecie, a czasem katastrofa — wraca tam suwak <span class="mono">denoise</span> z modułu czwartego, w nowej roli.</p>
