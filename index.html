@@ -169,6 +169,32 @@
   .fig { margin: 16px 0 0; }
   .fig img { display: block; width: 100%; height: auto; border: 1px solid var(--edge); border-radius: 10px; cursor: zoom-in; }
   .fig img:focus-visible { outline: 2px solid var(--w-image); outline-offset: 2px; }
+
+  /* porównanie przed/po z przeciąganym uchwytem — jak w węźle Compare w Comfy */
+  .porow { position: relative; margin: 16px 0 0; border: 1px solid var(--edge); border-radius: 10px;
+    overflow: hidden; touch-action: none; --poz: 50%; line-height: 0; }
+  .porow img { display: block; width: 100%; height: auto; }
+  .porow .wierzch { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--poz)) 0 0); }
+  .porow .uchwyt { position: absolute; top: 0; bottom: 0; left: var(--poz); width: 2px;
+    margin-left: -1px; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.35); pointer-events: none; }
+  .porow .uchwyt::after { content: "⟺"; position: absolute; top: 50%; left: 50%; width: 46px; height: 46px;
+    margin: -23px 0 0 -23px; border-radius: 50%; background: #fff; color: #21241d;
+    font: 700 20px/46px "IBM Plex Mono", ui-monospace, monospace; text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.4); }
+  .porow .et { position: absolute; bottom: 14px; z-index: 2; pointer-events: none;
+    font: 700 14px/1 "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .04em;
+    color: #fff; background: rgba(10,10,12,.78); padding: 8px 13px; border-radius: 7px; }
+  .porow .et.l { left: 14px; }
+  .porow .et.p { right: 14px; }
+  .porow input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0;
+    opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: transparent; }
+  .porow input::-webkit-slider-thumb { -webkit-appearance: none; width: 46px; height: 100%; }
+  .porow input::-moz-range-thumb { width: 46px; height: 100%; border: 0; opacity: 0; }
+  .porow:focus-within { outline: 2px solid var(--w-image); outline-offset: 2px; }
+  @media (max-width: 560px) {
+    .porow .et { font-size: 12px; padding: 6px 10px; bottom: 10px; }
+    .porow .uchwyt::after { width: 38px; height: 38px; margin: -19px 0 0 -19px; line-height: 38px; font-size: 17px; }
+  }
   .podtytul { margin: 30px 0 10px; font-size: var(--fs-lead); font-weight: 700; color: var(--ink); }
   .soon {
     margin-top: 18px; padding: 12px 16px; border: 1px dashed var(--edge); border-radius: 8px;
@@ -708,12 +734,22 @@
       <div class="row"><span class="k">czego nie zrobi</span><span class="v">Nie dorysuje rzeczy, których w kadrze nie było. Trzyma się oryginału — twarz zostaje ta sama, tylko ostrzejsza.</span></div>
     </div>
 
-    <p class="intro">Ten sam kadr, po lewej oryginał powiększony zwyczajnie, po prawej przepuszczony przez <span class="mono">SeedVR2</span>. Kliknij, żeby powiększyć.</p>
-    <figure class="fig">
-      <img class="powieksz" src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/upscale-przed-po.jpg"
-           alt="Kadr podzielony w pionie: po lewej oryginał, po prawej wynik powiększenia SeedVR2" loading="lazy" tabindex="0"
-           width="1500" height="1000" />
-    </figure>
+    <p class="intro">Ten sam kadr w dwóch wersjach. Przeciągnij uchwyt w bok — po lewej stronie linii oryginał powiększony zwyczajnie, po prawej przepuszczony przez <span class="mono">SeedVR2</span>. Działa też strzałkami po kliknięciu w obraz.</p>
+    <div class="porow">
+      <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/upscale-po.jpg"
+           alt="Ten sam kadr po powiększeniu przez SeedVR2 — widoczne pory skóry i pojedyncze rzęsy"
+           width="1500" height="1000" loading="lazy" />
+      <div class="wierzch">
+        <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/upscale-przed.jpg"
+             alt="Ten sam kadr powiększony zwyczajnie — skóra bez faktury, rzęsy rozmyte"
+             width="1500" height="1000" loading="lazy" />
+      </div>
+      <div class="uchwyt" aria-hidden="true"></div>
+      <span class="et l">oryginał</span>
+      <span class="et p">SeedVR2</span>
+      <input type="range" min="0" max="100" step="0.5" value="50"
+             aria-label="Porównanie przed i po powiększeniu — przesuń, żeby odsłonić wynik" />
+    </div>
 
     <p class="soon"><b>Wkrótce moduł ósmy.</b> <span class="mono">Ultimate SD Upscale</span> robi to inaczej: tnie obraz na kafle i każdy przepuszcza przez sampler, więc przy powiększaniu <b>dorysowuje</b> detal, którego w oryginale nie było. Czasem to dokładnie to, czego chcecie, a czasem katastrofa — wraca tam suwak <span class="mono">denoise</span> z modułu czwartego, w nowej roli.</p>
   </section>
@@ -881,6 +917,16 @@
       }
 
       idz(0);
+    });
+
+    // porównania przed/po — uchwyt sterowany suwakiem (mysz, dotyk, strzałki)
+    [].slice.call(document.querySelectorAll(".porow")).forEach(function (por) {
+      var zakres = por.querySelector("input[type=range]");
+      if (!zakres) return;
+      function ustaw() { por.style.setProperty("--poz", zakres.value + "%"); }
+      zakres.addEventListener("input", ustaw);
+      zakres.addEventListener("change", ustaw);
+      ustaw();
     });
 
     // pojedyncze obrazy poza karuzelą też otwierają się w powiększeniu
