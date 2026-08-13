@@ -503,6 +503,8 @@
       <li><a href="#porzadki">M5 · porządki na canvasie</a></li>
       <li><a href="#lora">M6 · LoRA</a></li>
       <li><a href="#upscale">M7 · powiększanie</a></li>
+      <li><a href="#ultimate-sd">M8 · Ultimate SD Upscale</a></li>
+      <li><a href="#dalej">Co dalej</a></li>
       <li><a href="#materialy">Materiały</a></li>
       <li><a href="#linki">Linki i profile</a></li>
     </ol>
@@ -752,6 +754,89 @@
     </div>
 
     <p class="soon"><b>Wkrótce moduł ósmy.</b> <span class="mono">Ultimate SD Upscale</span> robi to inaczej: tnie obraz na kafle i każdy przepuszcza przez sampler, więc przy powiększaniu <b>dorysowuje</b> detal, którego w oryginale nie było. Czasem to dokładnie to, czego chcecie, a czasem katastrofa — wraca tam suwak <span class="mono">denoise</span> z modułu czwartego, w nowej roli.</p>
+  </section>
+
+  <section id="ultimate-sd">
+    <span class="eyebrow">moduł 8 · Ultimate SD Upscale</span>
+    <h2>Powiększanie, które dorysowuje</h2>
+    <p class="intro">SeedVR2 powiększa to, co macie. <span class="mono">Ultimate SD Upscale</span> przy powiększaniu <b>dopisuje detal, którego w oryginale nie było</b>. Robi to tak: powiększa obraz wybranym modelem, tnie go na kafelki i każdy kafelek osobno przepuszcza przez sampler. Stąd jego nazwa robocza w tym module — drugi sampler w waszym workflow.</p>
+
+    <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m8.jpg">
+      <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m8.mp4" type="video/mp4" />
+      Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m8.mp4">Pobierz go tutaj</a>.
+    </video>
+    <div class="vid-meta"><span class="t">moduł 8</span><span>2:48</span><span>kafelki, denoise w nowej roli, prompt kafelków</span></div>
+
+    <p class="soon"><b>Workflow do ćwiczeń:</b> w <b>bookmarks</b> wybierz <span class="mono">szkolenie_image_upscale_ultimateSD</span>. To wasz plik z modułu piątego plus trzy węzły: <span class="mono">Load Upscale Model</span>, drugi <span class="mono">CLIP Text Encode</span> i <span class="mono">Ultimate SD Upscale</span>. Startowy <span class="mono">denoise</span> ustawiony na 0.20.</p>
+
+    <div class="praktyka">
+      <span class="naglowek">dlaczego kafelki zmyślają</span>
+      <b>Każdy kafelek dostaje cały wasz prompt, ale widzi tylko swój wycinek obrazu.</b> Kafelek, który złapał kawałek gładkiej skóry, czyta w prompcie „portret kobiety z piegami" i uznaje, że czegoś mu brakuje. Więc dorysowuje. Przy wysokim denoise wychodzi z tego druga twarz albo kosmyk włosów w poprzek kadru.
+      <p class="domknij">Dlatego w tym workflow Ultimate SD ma <b>własny prompt</b>, osobny od tego, którym generujecie obraz. Krótki i ogólny: ostry detal, naturalna faktura, dobre zdjęcie. Bez nazwanej treści model nie ma czego szukać i niczego nie dopisuje.</p>
+    </div>
+
+    <p class="intro">Ta sama baza i ten sam seed kafelków, oba przy <span class="mono">denoise 0.5</span> — czyli tam, gdzie zwykle robi się bałagan. Po lewej stronie linii wersja z osobnym promptem, po prawej z pełnym opisem sceny. Przeciągnij uchwyt.</p>
+    <div class="porow">
+      <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-pelny.jpg"
+           alt="Kafelki z pełnym opisem sceny przy denoise 0.5 — model dorysował brew przez kadr"
+           width="900" height="620" loading="lazy" />
+      <div class="wierzch">
+        <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-ogolny.jpg"
+             alt="Kafelki z osobnym ogólnym promptem przy denoise 0.5 — sama ostrość, bez dopisanej treści"
+             width="900" height="620" loading="lazy" />
+      </div>
+      <div class="uchwyt" aria-hidden="true"></div>
+      <span class="et l">osobny prompt</span>
+      <span class="et p">pełny opis</span>
+      <input type="range" min="0" max="100" step="0.5" value="50"
+             aria-label="Porównanie promptu kafelków — przesuń, żeby odsłonić wersję z osobnym promptem" />
+    </div>
+
+    <h3 class="podtytul">Denoise wraca — w nowej roli</h3>
+    <p class="intro">Ta sama gałka co w module czwartym, tylko że teraz mówi, ile wolno zmienić <b>w każdym kafelku</b>. Ta seria powstała na jednym obrazie i jednym seedzie, zmieniała się wyłącznie ta wartość.</p>
+    <figure class="fig">
+      <img class="powieksz" src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-seria-denoise.jpg"
+           alt="Cztery wartości denoise w Ultimate SD Upscale, od 0.15 do 0.5" loading="lazy" tabindex="0"
+           width="1700" height="584" />
+    </figure>
+
+    <div class="cards">
+      <div class="row"><span class="k">od czego zacząć</span><span class="v"><span class="mono">denoise 0.20</span>, potem w górę, aż zacznie wam się podobać. Powyżej <span class="mono">0.35</span> patrzcie już uważnie na detale.</span></div>
+      <div class="row"><span class="k">kafelek</span><span class="v"><span class="mono">tile_width</span> i <span class="mono">tile_height</span>, domyślnie 1024. Węzeł pokazuje w podglądzie ostatni przetworzony kafelek — po tym poznacie, że działa kawałkami.</span></div>
+      <div class="row"><span class="k">szwy</span><span class="v"><span class="mono">seam_fix_mode</span> nadpisuje granice między kafelkami, jeśli zaczną być widoczne. Domyślnie wyłączone i zwykle wystarcza.</span></div>
+      <div class="row"><span class="k">kiedy który</span><span class="v">Zdjęcie klienta, packshot, cokolwiek ma zostać sobą — <b>SeedVR2</b>. Wasza generacja, której chcecie dołożyć mięsa — <b>Ultimate SD</b>.</span></div>
+    </div>
+
+    <h3 class="podtytul">Modele powiększające</h3>
+    <p class="intro">Pole <span class="mono">Load Upscale Model</span> to wybór konkretnego pliku, a nie jedna uniwersalna funkcja. Każdy z nich został wytrenowany na innym materiale i inaczej traktuje szum, krawędzie i fakturę. Warto przepuścić swój obraz przez dwa czy trzy i porównać.</p>
+    <div class="cards">
+      <div class="row"><span class="k">4x-UltraSharp</span><span class="v">Domyślny wybór do zdjęć. Mocno wyostrza, dobrze trzyma krawędzie.</span></div>
+      <div class="row"><span class="k">4x-ClearRealityV1</span><span class="v">Łagodniejszy od UltraSharpa, mniej agresywny na skórze.</span></div>
+      <div class="row"><span class="k">RealESRGAN_x4plus</span><span class="v">Klasyk, bezpieczny i uniwersalny. Wersja <span class="mono">x2plus</span> gdy chcecie tylko dwukrotnie.</span></div>
+      <div class="row"><span class="k">RealESRGAN_x4plus_anime_6B</span><span class="v">Do rysunku, ilustracji i grafiki z płaskimi polami koloru.</span></div>
+      <div class="row"><span class="k">4x_NMKD-Siax_2d00k</span><span class="v">Zdjęcia, mocne wydobycie faktury.</span></div>
+      <div class="row"><span class="k">4xNomosUniDAT_otf</span><span class="v">Radzi sobie z materiałem zaszumionym i słabszej jakości.</span></div>
+      <div class="row"><span class="k">8xNMKDFaces160000G</span><span class="v">Trenowany na twarzach, powiększa ośmiokrotnie.</span></div>
+      <div class="row"><span class="k">DF2K_JPEG</span><span class="v">Do plików pociętych kompresją JPEG.</span></div>
+      <div class="row"><span class="k">1x-ITF-SkinDiffDetail-Lite</span><span class="v">Nie powiększa wcale — dokłada detal skórze w oryginalnym rozmiarze.</span></div>
+    </div>
+    <p class="soon"><b>Lista nie jest zamknięta.</b> Czego na niej nie ma, dogrywacie dokładnie tak samo jak LoRA w module szóstym: adres modelu → <span class="mono">Model Library</span> → <span class="mono">Import</span>, tylko typ wybieracie inny. Repozytoria z modelami powiększającymi są równie duże jak te z LoRA.</p>
+  </section>
+
+  <section id="dalej">
+    <span class="eyebrow">co dalej</span>
+    <h2>Koniec części pierwszej</h2>
+    <p class="intro">Osiem modułów wyżej to jeden zamknięty temat: <b>nieruchomy obraz</b>. Umiecie go zrobić, zajrzeć mu pod maskę, zmienić na podstawie innego obrazu, uporządkować sobie warsztat, dołożyć styl i wyciągnąć plik w rozmiarze do druku. To wystarczy do roboty i na tym można zostać na dłużej — reszta to wprawa.</p>
+
+    <div class="praktyka">
+      <span class="naglowek">część druga · obraz zaczyna mówić</span>
+      <b>Od portretu, przez dźwięk, do gadającej głowy.</b> Bierzemy postać wygenerowaną tak, jak nauczyliście się w części pierwszej, dokładamy jej głos i zsynchronizowany ruch ust. Po drodze osobny temat: generowanie dźwięku i muzyki, który sam w sobie jest najkrótszą drogą do efektu słyszalnego od razu.
+      <p class="domknij">Część druga rusza równolegle do tej, którą właśnie skończyliście — nie zastępuje jej i nie wymaga, żebyście wcześniej wszystko przećwiczyli. Będzie miała własne menu, żeby moduły nie zlewały się w jedną długą listę.</p>
+    </div>
+
+    <p class="soon"><b>Część trzecia:</b> całe reklamy od początku do końca. Scenariusz, klatki, ruch, dźwięk, montaż, formaty pod platformy. Części pierwsza i druga są pod to podkładem — dopiero mając obraz i dźwięk pod kontrolą, da się sensownie rozmawiać o składaniu z tego gotowej kreacji.</p>
+
+    <p class="intro">Jeśli macie do tej pory coś, co wam nie wyszło albo czego nie rozumiecie — <b>to jest moment, żeby o tym powiedzieć</b>. Kolejne części budują na tym, co tutaj, więc lepiej zatrzymać się teraz niż ciągnąć zaległość dalej.</p>
   </section>
 
   <section id="materialy">
