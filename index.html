@@ -133,7 +133,10 @@
   html { scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   h2 { font-size: 1.375rem; font-weight: 720; letter-spacing: -.01em; margin: 8px 0 6px; text-wrap: balance; }
-  section > .intro { color: var(--ink-soft); max-width: 64ch; margin: 0 0 22px; font-size: var(--fs-body); }
+  /* Rytm pionowy sekcji: każdy blok wnosi własny odstęp GÓRNY, marginesy sąsiadów
+     się zlewają, więc nie ma podwójnych przerw. Bez tego bloki bez margin-top
+     (.cards, .intro) przyklejały się do ramek i arkuszy nad nimi. */
+  section > .intro { color: var(--ink-soft); max-width: 64ch; margin: 18px 0 22px; font-size: var(--fs-body); }
 
   /* glossary node-cards */
   .group {
@@ -227,7 +230,7 @@
   .soon .mono, .praktyka .mono { overflow-wrap: anywhere; }
 
   /* materials / links cards */
-  .cards { display: grid; gap: 12px; }
+  .cards { display: grid; gap: 12px; margin-top: 18px; }
   .row {
     background: var(--node); border: 1px solid var(--edge); border-radius: 9px; box-shadow: var(--shadow);
     padding: 14px 18px; display: grid; grid-template-columns: 148px 1fr; gap: 6px 20px; align-items: baseline;
@@ -782,19 +785,19 @@
       <p class="domknij">Dlatego w tym workflow Ultimate SD ma <b>własny prompt</b>, osobny od tego, którym generujecie obraz. Krótki i ogólny: ostry detal, naturalna faktura, dobre zdjęcie. Bez nazwanej treści model nie ma czego szukać i niczego nie dopisuje.</p>
     </div>
 
-    <p class="intro">To samo zbliżenie co w poprzednim module, przepuszczone przez Ultimate SD przy <span class="mono">denoise 0.35</span>. <b>Przeciągnij uchwyt w prawo</b>, żeby odsłonić wynik.</p>
+    <p class="intro">To samo zbliżenie co w poprzednim module, przepuszczone przez Ultimate SD przy <span class="mono">denoise 0.35</span>. Po lewej stronie linii oryginał, po prawej wynik — <b>przeciągnij uchwyt</b>, żeby porównać.</p>
     <div class="porow">
-      <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-baza.jpg"
-           alt="Zbliżenie na rzęsy przed powiększeniem — rzęsy zlewają się w kreski, skóra bez faktury"
+      <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-po.jpg"
+           alt="To samo zbliżenie po Ultimate SD przy denoise 0.35 — wyrzeźbiona faktura skóry i rozdzielone rzęsy"
            width="900" height="620" loading="lazy" />
       <div class="wierzch">
-        <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-po.jpg"
-             alt="To samo zbliżenie po Ultimate SD przy denoise 0.35 — wyrzeźbiona faktura skóry i rozdzielone rzęsy"
+        <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-baza.jpg"
+             alt="Zbliżenie na rzęsy przed powiększeniem — rzęsy zlewają się w kreski, skóra bez faktury"
              width="900" height="620" loading="lazy" />
       </div>
       <div class="uchwyt" aria-hidden="true"></div>
-      <span class="et l">Ultimate SD</span>
-      <span class="et p">oryginał</span>
+      <span class="et l">oryginał</span>
+      <span class="et p">Ultimate SD</span>
       <input type="range" min="0" max="100" step="0.5" value="50"
              aria-label="Porównanie powiększenia Ultimate SD — przesuń w prawo, żeby odsłonić wynik" />
     </div>
@@ -841,6 +844,16 @@
     <span class="eyebrow">co dalej</span>
     <h2>Koniec części pierwszej</h2>
     <p class="intro">Osiem modułów wyżej to jeden zamknięty temat: <b>nieruchomy obraz</b>. Umiecie go zrobić, zajrzeć mu pod maskę, zmienić na podstawie innego obrazu, uporządkować sobie warsztat, dołożyć styl i wyciągnąć plik w rozmiarze do druku. To wystarczy do roboty i na tym można zostać na dłużej — reszta to wprawa.</p>
+
+    <h3 class="podtytul">Praca domowa na weekend</h3>
+    <p class="intro">Jedno zadanie, cztery kroki, wszystko na tym samym obrazie. Przejdziecie przez całą część pierwszą w jednym ciągu i zobaczycie, jak moduły się ze sobą łączą. Godzina spokojnej roboty, nie więcej.</p>
+    <ol class="kroki">
+      <li><span class="tresc"><b>Zróbcie obraz, na którym wam zależy.</b> Cokolwiek — postać, produkt, kadr do prezentacji. Własny prompt, wasz format, seed ustawiony na <span class="mono">fixed</span>, żebyście mogli do niego wracać. Zapiszcie numer seeda.</span></li>
+      <li><span class="tresc"><b>Zepsujcie go i naprawcie.</b> Wrzućcie ten sam obraz na wejście i przepuście przez <span class="mono">denoise</span> na trzech wartościach: 0.3, 0.5 i 0.7. Zobaczcie, gdzie leży wasz próg — ten, powyżej którego obraz przestaje być tym samym obrazem.</span></li>
+      <li><span class="tresc"><b>Dołóżcie LoRA.</b> Jedną, dowolną, byle pasowała do Krea 2. Sprawdźcie, czy ma słowo wyzwalające, i puśćcie tę samą generację na dwóch siłach. Jeśli nic się nie dzieje — wróćcie do modułu szóstego, tam jest odpowiedź.</span></li>
+      <li><span class="tresc"><b>Wyciągnijcie plik do druku.</b> Ten sam obraz przez <span class="mono">SeedVR2</span> i przez <span class="mono">Ultimate SD</span>. Obejrzyjcie oba w stu procentach i zdecydujcie, który wolicie — nie ma tu dobrej odpowiedzi, jest wasza.</span></li>
+    </ol>
+    <p class="soon"><b>Przynieście na warsztat jeden plik:</b> ten, który wyszedł wam najlepiej, razem z promptem i ustawieniami. Będziemy na nich pracować na żywo. Jeśli coś nie zadziała albo utknie — piszcie na czacie, od tego jest.</p>
 
     <div class="praktyka">
       <span class="naglowek">część druga · obraz zaczyna mówić</span>
