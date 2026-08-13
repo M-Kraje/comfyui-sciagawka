@@ -166,6 +166,13 @@
 
   #lora .row { grid-template-columns: 210px 1fr; }
   #lora .row .k { text-transform: none; letter-spacing: 0; }
+
+  /* nazwy modeli powiększających są długie — szersza kolumna i łamanie zamiast nachodzenia */
+  #ultimate-sd .modele .row { grid-template-columns: 260px 1fr; }
+  #ultimate-sd .modele .row .k { text-transform: none; letter-spacing: 0; overflow-wrap: anywhere; }
+  @media (max-width: 720px) {
+    #ultimate-sd .modele .row { grid-template-columns: 1fr; gap: 3px; }
+  }
   .fig { margin: 16px 0 0; }
   .fig img { display: block; width: 100%; height: auto; border: 1px solid var(--edge); border-radius: 10px; cursor: zoom-in; }
   .fig img:focus-visible { outline: 2px solid var(--w-image); outline-offset: 2px; }
@@ -775,21 +782,21 @@
       <p class="domknij">Dlatego w tym workflow Ultimate SD ma <b>własny prompt</b>, osobny od tego, którym generujecie obraz. Krótki i ogólny: ostry detal, naturalna faktura, dobre zdjęcie. Bez nazwanej treści model nie ma czego szukać i niczego nie dopisuje.</p>
     </div>
 
-    <p class="intro">Ta sama baza i ten sam seed kafelków, oba przy <span class="mono">denoise 0.5</span> — czyli tam, gdzie zwykle robi się bałagan. Po lewej stronie linii wersja z osobnym promptem, po prawej z pełnym opisem sceny. Przeciągnij uchwyt.</p>
+    <p class="intro">To samo zbliżenie co w poprzednim module, przepuszczone przez Ultimate SD przy <span class="mono">denoise 0.35</span>. <b>Przeciągnij uchwyt w prawo</b>, żeby odsłonić wynik.</p>
     <div class="porow">
-      <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-pelny.jpg"
-           alt="Kafelki z pełnym opisem sceny przy denoise 0.5 — model dorysował brew przez kadr"
+      <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-baza.jpg"
+           alt="Zbliżenie na rzęsy przed powiększeniem — rzęsy zlewają się w kreski, skóra bez faktury"
            width="900" height="620" loading="lazy" />
       <div class="wierzch">
-        <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-ogolny.jpg"
-             alt="Kafelki z osobnym ogólnym promptem przy denoise 0.5 — sama ostrość, bez dopisanej treści"
+        <img src="https://m-kraje.github.io/comfyui-sciagawka/arkusze/usdu-po.jpg"
+             alt="To samo zbliżenie po Ultimate SD przy denoise 0.35 — wyrzeźbiona faktura skóry i rozdzielone rzęsy"
              width="900" height="620" loading="lazy" />
       </div>
       <div class="uchwyt" aria-hidden="true"></div>
-      <span class="et l">osobny prompt</span>
-      <span class="et p">pełny opis</span>
+      <span class="et l">Ultimate SD</span>
+      <span class="et p">oryginał</span>
       <input type="range" min="0" max="100" step="0.5" value="50"
-             aria-label="Porównanie promptu kafelków — przesuń, żeby odsłonić wersję z osobnym promptem" />
+             aria-label="Porównanie powiększenia Ultimate SD — przesuń w prawo, żeby odsłonić wynik" />
     </div>
 
     <h3 class="podtytul">Denoise wraca — w nowej roli</h3>
@@ -809,14 +816,21 @@
 
     <h3 class="podtytul">Modele powiększające</h3>
     <p class="intro">Pole <span class="mono">Load Upscale Model</span> to wybór konkretnego pliku, a nie jedna uniwersalna funkcja. Każdy z nich został wytrenowany na innym materiale i inaczej traktuje szum, krawędzie i fakturę. Warto przepuścić swój obraz przez dwa czy trzy i porównać.</p>
-    <div class="cards">
+
+    <div class="praktyka">
+      <span class="naglowek">to „4x" w nazwie to nie jest wasze powiększenie</span>
+      <b>O finalnym rozmiarze decyduje wyłącznie <span class="mono">upscale_by</span> w węźle Ultimate SD.</b> Liczba w nazwie pliku mówi tylko, na jaką skalę model był trenowany — <span class="mono">4x-UltraSharp</span> najlepiej pracuje przy czterokrotnym powiększeniu, <span class="mono">8xNMKDFaces</span> przy ośmiokrotnym.
+      <p class="domknij">Możecie spokojnie użyć modelu <span class="mono">4x</span> przy <span class="mono">upscale_by</span> ustawionym na 2 — Ultimate SD przeskaluje wynik do tego, co ustawiliście. Model wybieracie pod <b>rodzaj materiału</b>, a nie pod docelowy rozmiar.</p>
+    </div>
+
+    <div class="cards modele">
       <div class="row"><span class="k">4x-UltraSharp</span><span class="v">Domyślny wybór do zdjęć. Mocno wyostrza, dobrze trzyma krawędzie.</span></div>
       <div class="row"><span class="k">4x-ClearRealityV1</span><span class="v">Łagodniejszy od UltraSharpa, mniej agresywny na skórze.</span></div>
-      <div class="row"><span class="k">RealESRGAN_x4plus</span><span class="v">Klasyk, bezpieczny i uniwersalny. Wersja <span class="mono">x2plus</span> gdy chcecie tylko dwukrotnie.</span></div>
+      <div class="row"><span class="k">RealESRGAN_x4plus</span><span class="v">Klasyk, bezpieczny i uniwersalny. Jest też wariant <span class="mono">x2plus</span>, trenowany na mniejszą skalę.</span></div>
       <div class="row"><span class="k">RealESRGAN_x4plus_anime_6B</span><span class="v">Do rysunku, ilustracji i grafiki z płaskimi polami koloru.</span></div>
       <div class="row"><span class="k">4x_NMKD-Siax_2d00k</span><span class="v">Zdjęcia, mocne wydobycie faktury.</span></div>
       <div class="row"><span class="k">4xNomosUniDAT_otf</span><span class="v">Radzi sobie z materiałem zaszumionym i słabszej jakości.</span></div>
-      <div class="row"><span class="k">8xNMKDFaces160000G</span><span class="v">Trenowany na twarzach, powiększa ośmiokrotnie.</span></div>
+      <div class="row"><span class="k">8xNMKDFaces160000G</span><span class="v">Trenowany na twarzach, na skalę ośmiokrotną — warto go sprawdzić przy portretach.</span></div>
       <div class="row"><span class="k">DF2K_JPEG</span><span class="v">Do plików pociętych kompresją JPEG.</span></div>
       <div class="row"><span class="k">1x-ITF-SkinDiffDetail-Lite</span><span class="v">Nie powiększa wcale — dokłada detal skórze w oryginalnym rozmiarze.</span></div>
     </div>
