@@ -1001,16 +1001,8 @@
       <div class="row"><span class="k">1x-ITF-SkinDiffDetail-Lite</span><span class="v">Nie powiększa wcale — dokłada detal skórze w oryginalnym rozmiarze.</span></div>
     </div>
     <p class="soon"><b>Lista nie jest zamknięta.</b> Czego na niej nie ma, dogrywacie dokładnie tak samo jak LoRA w module szóstym: adres modelu → <span class="mono">Model Library</span> → <span class="mono">Import</span>, tylko typ wybieracie inny. Repozytoria z modelami powiększającymi są równie duże jak te z LoRA.</p>
-  </div>
-    </details>
-  </section>
-
-  <section id="dalej">
-    <span class="eyebrow">co dalej</span>
-    <h2>Koniec części pierwszej</h2>
-    <p class="intro">Osiem modułów wyżej to jeden zamknięty temat: <b>nieruchomy obraz</b>. Umiecie go zrobić, zajrzeć mu pod maskę, zmienić na podstawie innego obrazu, uporządkować sobie warsztat, dołożyć styl i wyciągnąć plik w rozmiarze do druku. To wystarczy do roboty i na tym można zostać na dłużej — reszta to wprawa.</p>
-
-    <div class="modul bez-mini" id="praca-domowa">
+  
+      <div class="modul bez-mini" id="praca-domowa">
       <details>
         <summary>
           <span class="opis">
@@ -1032,6 +1024,16 @@
         </div>
       </details>
     </div>
+    </div>
+    </details>
+  </section>
+
+  <section id="dalej">
+    <span class="eyebrow">co dalej</span>
+    <h2>Koniec części pierwszej</h2>
+    <p class="intro">Osiem modułów wyżej to jeden zamknięty temat: <b>nieruchomy obraz</b>. Umiecie go zrobić, zajrzeć mu pod maskę, zmienić na podstawie innego obrazu, uporządkować sobie warsztat, dołożyć styl i wyciągnąć plik w rozmiarze do druku. To wystarczy do roboty i na tym można zostać na dłużej — reszta to wprawa.</p>
+
+    
 
     <div class="praktyka">
       <span class="naglowek">część druga · obraz zaczyna mówić</span>
@@ -1283,9 +1285,14 @@
       if (!hash || hash.length < 2) return;
       var cel = document.getElementById(hash.slice(1));
       if (!cel) return;
-      var d = cel.closest ? cel.closest("details") : null;
+      // otwórz WSZYSTKIE bloki nad celem — praca domowa siedzi w module 8,
+      // więc jedna kotwica potrafi wymagać dwóch poziomów
+      var el = cel;
+      while (el && el !== document.body) {
+        if (el.tagName === "DETAILS") el.open = true;
+        el = el.parentElement;
+      }
       var wSrodku = cel.querySelector ? cel.querySelector("details") : null;
-      if (d) d.open = true;
       if (wSrodku) wSrodku.open = true;
       setTimeout(function () { cel.scrollIntoView({ block: "start" }); }, 0);
     }
