@@ -171,6 +171,9 @@
   .modul .tresc { padding: 4px 18px 20px; }
   .modul .tresc > .group { margin-top: 0; }
 
+  /* pasek bez miniatury (np. praca domowa) */
+  .modul.bez-mini > details > summary { padding-left: 22px; }
+
   /* pasek sterowania nad listą modułów */
   .sterowanie { display: flex; justify-content: flex-end; margin-top: 26px; }
   .sterowanie button {
@@ -1007,8 +1010,18 @@
     <h2>Koniec części pierwszej</h2>
     <p class="intro">Osiem modułów wyżej to jeden zamknięty temat: <b>nieruchomy obraz</b>. Umiecie go zrobić, zajrzeć mu pod maskę, zmienić na podstawie innego obrazu, uporządkować sobie warsztat, dołożyć styl i wyciągnąć plik w rozmiarze do druku. To wystarczy do roboty i na tym można zostać na dłużej — reszta to wprawa.</p>
 
-    <h3 class="podtytul">Praca domowa na weekend</h3>
-    <p class="intro">Jedno zadanie, cztery kroki, wszystko na tym samym obrazie. Przejdziecie przez całą część pierwszą w jednym ciągu i zobaczycie, jak moduły się ze sobą łączą. Godzina spokojnej roboty, nie więcej.</p>
+    <div class="modul bez-mini" id="praca-domowa">
+      <details>
+        <summary>
+          <span class="opis">
+            <span class="eyebrow">zadanie</span>
+            <span class="tytul">Praca domowa na weekend</span>
+            <span class="zajawka">Jedno zadanie, cztery kroki, wszystko na tym samym obrazie. Godzina spokojnej roboty.</span>
+          </span>
+          <span class="czas">4 kroki</span><span class="strzalka" aria-hidden="true"></span>
+        </summary>
+        <div class="tresc">
+          <p class="intro">Jedno zadanie, cztery kroki, wszystko na tym samym obrazie. Przejdziecie przez całą część pierwszą w jednym ciągu i zobaczycie, jak moduły się ze sobą łączą. Godzina spokojnej roboty, nie więcej.</p>
     <ol class="kroki">
       <li><span class="tresc"><b>Zróbcie obraz, na którym wam zależy.</b> Cokolwiek — postać, produkt, kadr do prezentacji. Własny prompt, wasz format, seed ustawiony na <span class="mono">fixed</span>, żebyście mogli do niego wracać. Zapiszcie numer seeda.</span></li>
       <li><span class="tresc"><b>Zepsujcie go i naprawcie.</b> Wrzućcie ten sam obraz na wejście i przepuście przez <span class="mono">denoise</span> na trzech wartościach: 0.3, 0.5 i 0.7. Zobaczcie, gdzie leży wasz próg — ten, powyżej którego obraz przestaje być tym samym obrazem.</span></li>
@@ -1016,6 +1029,9 @@
       <li><span class="tresc"><b>Wyciągnijcie plik do druku.</b> Ten sam obraz przez <span class="mono">SeedVR2</span> i przez <span class="mono">Ultimate SD</span>. Obejrzyjcie oba w stu procentach i zdecydujcie, który wolicie — nie ma tu dobrej odpowiedzi, jest wasza.</span></li>
     </ol>
     <p class="soon"><b>Przynieście na warsztat jeden plik:</b> ten, który wyszedł wam najlepiej, razem z promptem i ustawieniami. Będziemy na nich pracować na żywo. Jeśli coś nie zadziała albo utknie — piszcie na czacie, od tego jest.</p>
+        </div>
+      </details>
+    </div>
 
     <div class="praktyka">
       <span class="naglowek">część druga · obraz zaczyna mówić</span>
