@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ComfyUI Kompendium</title>
+﻿<title>ComfyUI Kompendium</title>
 <style>
   :root {
     --canvas: #f3f4f0;
@@ -515,6 +515,13 @@
       <li><a href="#upscale">M7 · powiększanie</a></li>
       <li><a href="#ultimate-sd">M8 · Ultimate SD Upscale</a></li>
       <li><a href="#dalej">Co dalej</a></li>
+    </ol>
+    <div class="naw-tyt">część druga</div>
+    <ol>
+      <li><a href="#c2m1">C2·M1 · lektor</a></li>
+    </ol>
+    <div class="naw-tyt">dodatki</div>
+    <ol>
       <li><a href="#materialy">Materiały</a></li>
       <li><a href="#linki">Linki i profile</a></li>
     </ol>
@@ -866,6 +873,22 @@
     <p class="intro">Jeśli macie do tej pory coś, co wam nie wyszło albo czego nie rozumiecie — <b>to jest moment, żeby o tym powiedzieć</b>. Kolejne części budują na tym, co tutaj, więc lepiej zatrzymać się teraz niż ciągnąć zaległość dalej.</p>
   </section>
 
+  <section id="c2m1">
+    <span class="eyebrow">część 2 · moduł 1 · Lektor</span>
+    <h2>Głos, którego jeszcze nie ma</h2>
+    <p class="intro">Pierwszy moduł części drugiej. Opisujecie słowami lektora, jakiego chcecie, dostajecie trzy warianty do wyboru i zapisujecie ten, który pasuje. Potem <b>Studio</b>, w którym kwestia powstaje akapit po akapicie — z kłódką na zdaniach, które już wyszły dobrze, i regeneracją pojedynczych fragmentów zamiast całości.</p>
+
+    <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/c2-m1.jpg">
+      <source src="https://m-kraje.github.io/comfyui-sciagawka/video/c2-m1.mp4" type="video/mp4" />
+      Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/c2-m1.mp4">Pobierz go tutaj</a>.
+    </video>
+    <div class="vid-meta"><span class="t">część 2 · moduł 1</span><span>3:49</span><span>Voice Design, Studio, parametry, eksport</span></div>
+
+    <p class="soon"><b>Prompt piszecie po angielsku.</b> Polskość deklarujecie w treści opisu, słowami <span class="mono">Native Polish</span>. Przy zapisie głosu etykieta języka stoi domyślnie na <b>angielskim</b> — przestawcie ją ręcznie na polski, inaczej nie odnajdziecie swojego głosu w bibliotece.</p>
+
+    <p class="soon"><b>Głosów nie klonujemy w ElevenLabs.</b> Straciliśmy tam już raz konto po wykorzystaniu cudzego głosu. Jeśli chcecie klonować, robicie to <b>w ComfyUI</b>. Voice Design tworzy głos nowy, z opisu, i niczyjego nie odtwarza — dlatego jest w tym module jedyną drogą do własnego lektora.</p>
+  </section>
+
   <section id="materialy">
     <span class="eyebrow">materiały</span>
     <h2>Gdzie i jak pracujecie</h2>
@@ -1051,6 +1074,7 @@
     });
   })();
 </script>
+
 
 </body>
 </html>
