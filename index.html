@@ -171,6 +171,14 @@
   .modul .tresc { padding: 4px 18px 20px; }
   .modul .tresc > .group { margin-top: 0; }
 
+  /* zwinięta grupa słowniczka ma wyglądać jak każdy inny moduł:
+     bez własnej ramki, kolorowego paska i cienia — całą oprawę niesie <details> */
+  .group.modul {
+    background: none; border: 0; border-radius: 0; box-shadow: none;
+    padding: 0; margin-top: 14px;
+  }
+  .group.modul > details > summary .eyebrow { color: var(--gc, var(--ink-faint)); }
+
   /* pasek bez miniatury (np. praca domowa) */
   .modul.bez-mini > details > summary { padding-left: 22px; }
 
@@ -560,7 +568,7 @@
   </header>
 
   <nav class="naw" aria-label="Spis treści">
-    <div class="naw-tyt">na tej stronie</div>
+    <div class="naw-tyt">część pierwsza</div>
     <ol>
       <li><a href="#start">Zanim zaczniesz</a></li>
       <li><a href="#m1">M1 · od promptu</a></li>
@@ -571,7 +579,6 @@
       <li><a href="#lora">M6 · LoRA</a></li>
       <li><a href="#upscale">M7 · powiększanie</a></li>
       <li><a href="#ultimate-sd">M8 · Ultimate SD</a></li>
-      <li><a href="#dalej">Co dalej</a></li>
     </ol>
     <div class="naw-tyt">część druga</div>
     <ol>
@@ -579,6 +586,7 @@
     </ol>
     <div class="naw-tyt">dodatki</div>
     <ol>
+      <li><a href="#dalej">Co dalej</a></li>
       <li><a href="#linki">Linki i profile</a></li>
     </ol>
   </nav>
@@ -611,7 +619,8 @@
         <summary>
           <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m1.jpg" alt="" loading="lazy">
           <span class="opis">
-            <span class="tytul">od promptu do wyniku <span class="mod">· moduł 1</span></span>
+            <span class="eyebrow">moduł 1 · słowniczek</span>
+            <span class="tytul">Od promptu do wyniku</span>
             <span class="zajawka">otwierasz template, wpisujesz prompt, dostajesz obraz</span>
           </span>
           <span class="czas">0:55</span><span class="strzalka" aria-hidden="true"></span>
@@ -638,7 +647,8 @@
         <summary>
           <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m2.jpg" alt="" loading="lazy">
           <span class="opis">
-            <span class="tytul">a co jest w środku <span class="mod">· moduł 2</span></span>
+            <span class="eyebrow">moduł 2 · słowniczek</span>
+            <span class="tytul">A co jest w środku</span>
             <span class="zajawka">wchodzimy do subgraphu i oglądamy silnik od środka</span>
           </span>
           <span class="czas">2:33</span><span class="strzalka" aria-hidden="true"></span>
@@ -667,7 +677,8 @@
         <summary>
           <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m3.jpg" alt="" loading="lazy">
           <span class="opis">
-            <span class="tytul">dlaczego to działa <span class="mod">· moduł 3</span></span>
+            <span class="eyebrow">moduł 3 · słowniczek</span>
+            <span class="tytul">Dlaczego to działa</span>
             <span class="zajawka">szum, dyfuzja, latent i VAE — skąd się bierze obraz</span>
           </span>
           <span class="czas">1:45</span><span class="strzalka" aria-hidden="true"></span>
@@ -686,8 +697,6 @@
       </dl></div>
       </details>
     </div>
-
-    <p class="soon">Wkrótce dojdą hasła z kolejnych modułów: <span class="mono">img2img</span>, <span class="mono">denoise</span> w praktyce, <span class="mono">LoRA</span>, two-pass (podwójny sampler).</p>
   </section>
 
   <section id="denoise" class="modul">
@@ -912,7 +921,7 @@
              aria-label="Porównanie powiększenia — przesuń w prawo, żeby odsłonić wynik SeedVR2" />
     </div>
 
-    <p class="soon"><b>Wkrótce moduł ósmy.</b> <span class="mono">Ultimate SD Upscale</span> robi to inaczej: tnie obraz na kafle i każdy przepuszcza przez sampler, więc przy powiększaniu <b>dorysowuje</b> detal, którego w oryginale nie było. Czasem to dokładnie to, czego chcecie, a czasem katastrofa — wraca tam suwak <span class="mono">denoise</span> z modułu czwartego, w nowej roli.</p>
+    <p class="soon"><b>Moduł ósmy robi to inaczej.</b> <span class="mono">Ultimate SD Upscale</span> tnie obraz na kafle i każdy przepuszcza przez sampler, więc przy powiększaniu <b>dorysowuje</b> detal, którego w oryginale nie było. Czasem to dokładnie to, czego chcecie, a czasem katastrofa — wraca tam suwak <span class="mono">denoise</span> z modułu czwartego, w nowej roli.</p>
   </div>
     </details>
   </section>
