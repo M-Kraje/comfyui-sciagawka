@@ -128,6 +128,58 @@
   }
   .start .uwaga b { color: var(--ink); font-weight: 600; }
 
+  /* ---------- zwijane moduły ---------- */
+  .modul { margin-top: 14px; }
+  .modul > details {
+    border: 1px solid var(--edge); border-radius: 10px; background: var(--node);
+    overflow: hidden; transition: border-color .15s ease;
+  }
+  .modul > details:hover { border-color: var(--ink-soft); }
+  .modul > details > summary {
+    display: flex; align-items: center; gap: 18px; padding: 13px 18px;
+    cursor: pointer; list-style: none; user-select: none;
+  }
+  .modul > details > summary::-webkit-details-marker { display: none; }
+  .modul .mini {
+    width: 128px; height: 72px; object-fit: cover; border-radius: 6px;
+    flex: 0 0 auto; background: var(--chip); border: 1px solid var(--edge);
+  }
+  .modul .opis { flex: 1 1 auto; min-width: 0; }
+  .modul .opis .eyebrow { display: block; margin-bottom: 2px; }
+  .modul .tytul {
+    display: block; font-size: var(--fs-lead); font-weight: 700; color: var(--ink);
+    line-height: 1.25;
+  }
+  .modul .tytul .mod { font-weight: 400; color: var(--ink-soft); }
+  .modul .zajawka {
+    display: block; margin-top: 4px; font-size: var(--fs-small); color: var(--ink-soft);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .modul .czas {
+    flex: 0 0 auto; font-family: var(--mono, monospace); font-size: var(--fs-small);
+    color: var(--ink-soft); background: var(--chip); border: 1px solid var(--edge);
+    border-radius: 6px; padding: 3px 9px;
+  }
+  .modul .strzalka {
+    flex: 0 0 auto; width: 10px; height: 10px; margin-left: 4px;
+    border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft);
+    transform: rotate(45deg) translate(-2px, -2px); transition: transform .18s ease;
+  }
+  .modul > details[open] > summary .strzalka { transform: rotate(225deg) translate(-2px, -2px); }
+  .modul > details[open] > summary { border-bottom: 1px solid var(--edge); }
+  .modul > details[open] > summary .zajawka { display: none; }
+  .modul .tresc { padding: 4px 18px 20px; }
+  .modul .tresc > .group { margin-top: 0; }
+
+  /* pasek sterowania nad listą modułów */
+  .sterowanie { display: flex; justify-content: flex-end; margin-top: 26px; }
+  .sterowanie button {
+    font: inherit; font-size: var(--fs-small); color: var(--ink-soft);
+    background: var(--node); border: 1px solid var(--edge); border-radius: 8px;
+    padding: 7px 14px; cursor: pointer;
+  }
+  .sterowanie button:hover { border-color: var(--ink-soft); color: var(--ink); }
+
   section { margin-top: 54px; }
   /* skok do kotwicy nie może chować nagłówka pod przyklejonym paskiem */
   section[id], .group[id] { scroll-margin-top: 64px; }
@@ -508,19 +560,19 @@
     <div class="naw-tyt">na tej stronie</div>
     <ol>
       <li><a href="#start">Zanim zaczniesz</a></li>
-      <li><a href="#m1">M1 · od promptu do wyniku</a></li>
-      <li><a href="#m2">M2 · a co jest w środku</a></li>
-      <li><a href="#m3">M3 · dlaczego to działa</a></li>
-      <li><a href="#denoise">M4 · skala denoise</a></li>
-      <li><a href="#porzadki">M5 · porządki na canvasie</a></li>
+      <li><a href="#m1">M1 · od promptu</a></li>
+      <li><a href="#m2">M2 · w środku</a></li>
+      <li><a href="#m3">M3 · dlaczego działa</a></li>
+      <li><a href="#denoise">M4 · denoise</a></li>
+      <li><a href="#porzadki">M5 · porządki</a></li>
       <li><a href="#lora">M6 · LoRA</a></li>
       <li><a href="#upscale">M7 · powiększanie</a></li>
-      <li><a href="#ultimate-sd">M8 · Ultimate SD Upscale</a></li>
+      <li><a href="#ultimate-sd">M8 · Ultimate SD</a></li>
       <li><a href="#dalej">Co dalej</a></li>
     </ol>
     <div class="naw-tyt">część druga</div>
     <ol>
-      <li><a href="#c2m1">C2·M1 · lektor</a></li>
+      <li><a href="#c2m1">M1 · lektor</a></li>
     </ol>
     <div class="naw-tyt">dodatki</div>
     <ol>
@@ -541,13 +593,28 @@
     <p class="uwaga"><b>Wylogowuje Cię co jakiś czas i to normalne.</b> Nie znaczy, że coś zepsułeś ani że straciłeś dostęp. Logujesz się ponownie tymi samymi danymi i wracasz do pracy. Jeśli po zalogowaniu nie widzisz template'u, odśwież stronę.</p>
   </section>
 
+  <div class="sterowanie">
+    <button type="button" id="przelacz-wszystko" aria-expanded="false">rozwiń wszystko</button>
+  </div>
+
   <section id="slowniczek">
     <span class="eyebrow">słowniczek</span>
     <h2>Nazwy z interfejsu</h2>
+    
+    
     <p class="intro">Nazwy zostawiam po angielsku — tak są w interfejsie i tak najłatwiej je zapamiętać. Po polsku tylko wyjaśnienie. Pogrupowane wg modułu, żeby łatwo było wrócić do właściwego miejsca.</p>
 
-    <div class="group" id="m1" style="--gc:var(--w-clip)">
-      <span class="lbl">od promptu do wyniku <span class="mod">· moduł 1</span></span>
+    <div class="group modul" id="m1" style="--gc:var(--w-clip)">
+      <details>
+        <summary>
+          <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m1.jpg" alt="" loading="lazy">
+          <span class="opis">
+            <span class="tytul">od promptu do wyniku <span class="mod">· moduł 1</span></span>
+            <span class="zajawka">otwierasz template, wpisujesz prompt, dostajesz obraz</span>
+          </span>
+          <span class="czas">0:55</span><span class="strzalka" aria-hidden="true"></span>
+        </summary>
+        <div class="tresc">
       <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m1.jpg">
         <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m1.mp4" type="video/mp4" />
         Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m1.mp4">Pobierz go tutaj</a>.
@@ -560,11 +627,21 @@
         <div class="term"><dt>batch size</dt><dd>Ile obrazów naraz z jednego uruchomienia.</dd></div>
         <div class="term"><dt>resolution / aspect ratio</dt><dd>Rozmiar i proporcje obrazu: kwadrat, pion, poziom.</dd></div>
         <div class="term"><dt>template</dt><dd>Gotowy workflow do wczytania. Wasz to <b>szkolenie_image_krea2_turbo_t2i</b> w bookmarks.</dd></div>
-      </dl>
+      </dl></div>
+      </details>
     </div>
 
-    <div class="group" id="m2" style="--gc:var(--w-model)">
-      <span class="lbl">a co jest w środku <span class="mod">· moduł 2</span></span>
+    <div class="group modul" id="m2" style="--gc:var(--w-model)">
+      <details>
+        <summary>
+          <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m2.jpg" alt="" loading="lazy">
+          <span class="opis">
+            <span class="tytul">a co jest w środku <span class="mod">· moduł 2</span></span>
+            <span class="zajawka">wchodzimy do subgraphu i oglądamy silnik od środka</span>
+          </span>
+          <span class="czas">2:33</span><span class="strzalka" aria-hidden="true"></span>
+        </summary>
+        <div class="tresc">
       <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m2.jpg">
         <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m2.mp4" type="video/mp4" />
         Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m2.mp4">Pobierz go tutaj</a>.
@@ -579,11 +656,21 @@
         <div class="term"><dt>denoise</dt><dd>Ile szumu sprzątamy. 1.0 = od zera, mniej = zostaw część oryginału (klucz do img2img).</dd></div>
         <div class="term"><dt>negative prompt</dt><dd>Czego NIE chcesz. Szybkie modele często mają go wyzerowany dla prędkości.</dd></div>
         <div class="term"><dt>Load Diffusion Model / CLIP / VAE</dt><dd>Trzy części silnika: model, rozumienie tekstu, tłumacz latent↔piksele.</dd></div>
-      </dl>
+      </dl></div>
+      </details>
     </div>
 
-    <div class="group" id="m3" style="--gc:var(--w-latent)">
-      <span class="lbl">dlaczego to działa <span class="mod">· moduł 3</span></span>
+    <div class="group modul" id="m3" style="--gc:var(--w-latent)">
+      <details>
+        <summary>
+          <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m3.jpg" alt="" loading="lazy">
+          <span class="opis">
+            <span class="tytul">dlaczego to działa <span class="mod">· moduł 3</span></span>
+            <span class="zajawka">szum, dyfuzja, latent i VAE — skąd się bierze obraz</span>
+          </span>
+          <span class="czas">1:45</span><span class="strzalka" aria-hidden="true"></span>
+        </summary>
+        <div class="tresc">
       <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m3.jpg">
         <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m3.mp4" type="video/mp4" />
         Twoja przeglądarka nie odtworzy tego filmu. <a href="https://m-kraje.github.io/comfyui-sciagawka/video/m3.mp4">Pobierz go tutaj</a>.
@@ -594,15 +681,27 @@
         <div class="term"><dt>diffusion / dyfuzja</dt><dd>Krok po kroku model odejmuje szum, aż wyłoni się obraz.</dd></div>
         <div class="term"><dt>latent</dt><dd>Ten sam szum docięty do wymiarów i mocno skompresowany. Tu pracuje model.</dd></div>
         <div class="term"><dt>VAE decode / encode</dt><dd><b>decode</b>: latent → piksele (gotowy obraz). <b>encode</b>: piksele → latent (na później, przy edycji).</dd></div>
-      </dl>
+      </dl></div>
+      </details>
     </div>
 
     <p class="soon">Wkrótce dojdą hasła z kolejnych modułów: <span class="mono">img2img</span>, <span class="mono">denoise</span> w praktyce, <span class="mono">LoRA</span>, two-pass (podwójny sampler).</p>
   </section>
 
-  <section id="denoise">
-    <span class="eyebrow">moduł 4 · denoise</span>
-    <h2>Ile oryginału przeżywa</h2>
+  <section id="denoise" class="modul">
+    <details>
+      <summary>
+        <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m4.jpg" alt="" loading="lazy">
+        <span class="opis">
+          <span class="eyebrow">moduł 4 · denoise</span>
+          <span class="tytul">Ile oryginału przeżywa</span>
+          <span class="zajawka">Trzy razy to samo doświadczenie: jedno zdjęcie na wejściu, jeden prompt, jeden stały seed.</span>
+        </span>
+        <span class="czas">3:00</span><span class="strzalka" aria-hidden="true"></span>
+      </summary>
+      <div class="tresc">
+    
+    
 
     <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m4.jpg">
       <source src="https://m-kraje.github.io/comfyui-sciagawka/video/m4.mp4" type="video/mp4" />
@@ -642,11 +741,24 @@
       </ol>
       <p class="domknij">Ta wartość będzie inna dla każdego zdjęcia i każdego promptu. Znalezienie jej u siebie jest całym zadaniem.</p>
     </div>
+  </div>
+    </details>
   </section>
 
-  <section id="porzadki">
-    <span class="eyebrow">moduł 5 · porządki</span>
-    <h2>Canvas do ogarnięcia</h2>
+  <section id="porzadki" class="modul">
+    <details>
+      <summary>
+        <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m5.jpg" alt="" loading="lazy">
+        <span class="opis">
+          <span class="eyebrow">moduł 5 · porządki</span>
+          <span class="tytul">Canvas do ogarnięcia</span>
+          <span class="zajawka">Workflow, który dostajecie, ułożył ktoś inny.</span>
+        </span>
+        <span class="czas">2:03</span><span class="strzalka" aria-hidden="true"></span>
+      </summary>
+      <div class="tresc">
+    
+    
     <p class="intro">Workflow, który dostajecie, ułożył ktoś inny. Zanim cokolwiek do niego dołożycie, warto zrobić sobie miejsce. Film pokazuje każdy ruch na żywym canvasie — przesuwanie, zwijanie, skalowanie, grupowanie.</p>
 
     <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m5.jpg">
@@ -672,11 +784,24 @@
       <div class="row"><span class="k">zapis</span><span class="v"><span class="mono">Ctrl + S</span>. Zapisuj <b>pod własną nazwą</b> — nie nadpisuj pliku szkoleniowego.</span></div>
       <div class="row"><span class="k">wszystkie skróty</span><span class="v"><span class="mono">Ctrl + Shift + K</span> otwiera pełną listę. <span class="mono">Alt +</span> i <span class="mono">Alt -</span> to zoom.</span></div>
     </div>
+  </div>
+    </details>
   </section>
 
-  <section id="lora">
-    <span class="eyebrow">moduł 6 · LoRA</span>
-    <h2>Przyprawa do modelu</h2>
+  <section id="lora" class="modul">
+    <details>
+      <summary>
+        <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m6.jpg" alt="" loading="lazy">
+        <span class="opis">
+          <span class="eyebrow">moduł 6 · LoRA</span>
+          <span class="tytul">Przyprawa do modelu</span>
+          <span class="zajawka">LoRA to mały plik, który przechyla model w jedną stronę — dokłada mu styl albo umiejętność, których sam nie ma.</span>
+        </span>
+        <span class="czas">2:56</span><span class="strzalka" aria-hidden="true"></span>
+      </summary>
+      <div class="tresc">
+    
+    
     <p class="intro">LoRA to mały plik, który przechyla model w jedną stronę — dokłada mu styl albo umiejętność, których sam nie ma. W grafie to jeden węzeł na drodze modelu: kabel idzie z loadera przez <span class="mono">Load LoRA</span> do KSamplera. Dwa pola: który plik i jak mocno.</p>
 
     <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m6.jpg">
@@ -726,11 +851,24 @@
            width="1598" height="1392" />
     </figure>
 
+  </div>
+    </details>
   </section>
 
-  <section id="upscale">
-    <span class="eyebrow">moduł 7 · powiększanie</span>
-    <h2>Półtora megapiksela to za mało</h2>
+  <section id="upscale" class="modul">
+    <details>
+      <summary>
+        <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m7.jpg" alt="" loading="lazy">
+        <span class="opis">
+          <span class="eyebrow">moduł 7 · powiększanie</span>
+          <span class="tytul">Półtora megapiksela to za mało</span>
+          <span class="zajawka">Wasze generacje mają jakieś 1,5 megapiksela.</span>
+        </span>
+        <span class="czas">2:12</span><span class="strzalka" aria-hidden="true"></span>
+      </summary>
+      <div class="tresc">
+    
+    
     <p class="intro">Wasze generacje mają jakieś 1,5 megapiksela. Na ekran wystarczy, ale w layoucie na okładkę albo w druku zobaczycie miękką papkę. <span class="mono">SeedVR2</span> ogląda obraz i dopowiada detal tam, gdzie w pliku była plama pikseli — pory skóry, pojedyncze włosy, fakturę tkaniny.</p>
 
     <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m7.jpg">
@@ -773,11 +911,24 @@
     </div>
 
     <p class="soon"><b>Wkrótce moduł ósmy.</b> <span class="mono">Ultimate SD Upscale</span> robi to inaczej: tnie obraz na kafle i każdy przepuszcza przez sampler, więc przy powiększaniu <b>dorysowuje</b> detal, którego w oryginale nie było. Czasem to dokładnie to, czego chcecie, a czasem katastrofa — wraca tam suwak <span class="mono">denoise</span> z modułu czwartego, w nowej roli.</p>
+  </div>
+    </details>
   </section>
 
-  <section id="ultimate-sd">
-    <span class="eyebrow">moduł 8 · Ultimate SD Upscale</span>
-    <h2>Powiększanie, które dorysowuje</h2>
+  <section id="ultimate-sd" class="modul">
+    <details>
+      <summary>
+        <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/m8.jpg" alt="" loading="lazy">
+        <span class="opis">
+          <span class="eyebrow">moduł 8 · Ultimate SD Upscale</span>
+          <span class="tytul">Powiększanie, które dorysowuje</span>
+          <span class="zajawka">SeedVR2 powiększa to, co macie. Ultimate SD Upscale przy powiększaniu dopisuje detal, którego w oryginale nie było.</span>
+        </span>
+        <span class="czas">2:48</span><span class="strzalka" aria-hidden="true"></span>
+      </summary>
+      <div class="tresc">
+    
+    
     <p class="intro">SeedVR2 powiększa to, co macie. <span class="mono">Ultimate SD Upscale</span> przy powiększaniu <b>dopisuje detal, którego w oryginale nie było</b>. Robi to tak: powiększa obraz wybranym modelem, tnie go na kafelki i każdy kafelek osobno przepuszcza przez sampler. Stąd jego nazwa robocza w tym module — drugi sampler w waszym workflow.</p>
 
     <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/m8.jpg">
@@ -847,6 +998,8 @@
       <div class="row"><span class="k">1x-ITF-SkinDiffDetail-Lite</span><span class="v">Nie powiększa wcale — dokłada detal skórze w oryginalnym rozmiarze.</span></div>
     </div>
     <p class="soon"><b>Lista nie jest zamknięta.</b> Czego na niej nie ma, dogrywacie dokładnie tak samo jak LoRA w module szóstym: adres modelu → <span class="mono">Model Library</span> → <span class="mono">Import</span>, tylko typ wybieracie inny. Repozytoria z modelami powiększającymi są równie duże jak te z LoRA.</p>
+  </div>
+    </details>
   </section>
 
   <section id="dalej">
@@ -875,9 +1028,20 @@
     <p class="intro">Jeśli macie do tej pory coś, co wam nie wyszło albo czego nie rozumiecie — <b>to jest moment, żeby o tym powiedzieć</b>. Kolejne części budują na tym, co tutaj, więc lepiej zatrzymać się teraz niż ciągnąć zaległość dalej.</p>
   </section>
 
-  <section id="c2m1">
-    <span class="eyebrow">część 2 · moduł 1 · Lektor</span>
-    <h2>Głos, którego jeszcze nie ma</h2>
+  <section id="c2m1" class="modul">
+    <details>
+      <summary>
+        <img class="mini" src="https://m-kraje.github.io/comfyui-sciagawka/video/c2-m1.jpg" alt="" loading="lazy">
+        <span class="opis">
+          <span class="eyebrow">część 2 · moduł 1 · Lektor</span>
+          <span class="tytul">Głos, którego jeszcze nie ma</span>
+          <span class="zajawka">Pierwszy moduł części drugiej. Opisujecie słowami lektora, jakiego chcecie, dostajecie trzy warianty do wyboru i zapisujecie ten, który pasuje.</span>
+        </span>
+        <span class="czas">3:49</span><span class="strzalka" aria-hidden="true"></span>
+      </summary>
+      <div class="tresc">
+    
+    
     <p class="intro">Pierwszy moduł części drugiej. Opisujecie słowami lektora, jakiego chcecie, dostajecie trzy warianty do wyboru i zapisujecie ten, który pasuje. Potem <b>Studio</b>, w którym kwestia powstaje akapit po akapicie — z kłódką na zdaniach, które już wyszły dobrze, i regeneracją pojedynczych fragmentów zamiast całości.</p>
 
     <video class="vid" controls preload="none" playsinline poster="https://m-kraje.github.io/comfyui-sciagawka/video/c2-m1.jpg">
@@ -889,6 +1053,8 @@
     <p class="soon"><b>Prompt piszecie po angielsku.</b> Polskość deklarujecie w treści opisu, słowami <span class="mono">Native Polish</span>. Przy zapisie głosu etykieta języka stoi domyślnie na <b>angielskim</b> — przestawcie ją ręcznie na polski, inaczej nie odnajdziecie swojego głosu w bibliotece.</p>
 
     <p class="soon"><b>Głosów nie klonujemy w ElevenLabs.</b> Straciliśmy tam już raz konto po wykorzystaniu cudzego głosu. Jeśli chcecie klonować, robicie to <b>w ComfyUI</b>. Voice Design tworzy głos nowy, z opisu, i niczyjego nie odtwarza — dlatego jest w tym module jedyną drogą do własnego lektora.</p>
+  </div>
+    </details>
   </section>
 
   <section id="materialy">
@@ -1077,6 +1243,45 @@
   })();
 </script>
 
+
+<script>
+  // Zwijane moduły: przełącznik "rozwiń wszystko" oraz otwieranie bloku,
+  // gdy ktoś wchodzi z linku do kotwicy schowanej w zwiniętym <details>.
+  (function () {
+    var wszystkie = function () {
+      return [].slice.call(document.querySelectorAll(".modul > details"));
+    };
+
+    var btn = document.getElementById("przelacz-wszystko");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        var rozwijamy = btn.getAttribute("aria-expanded") !== "true";
+        wszystkie().forEach(function (d) { d.open = rozwijamy; });
+        btn.setAttribute("aria-expanded", rozwijamy ? "true" : "false");
+        btn.textContent = rozwijamy ? "zwiń wszystko" : "rozwiń wszystko";
+      });
+    }
+
+    // kotwica wskazująca na coś w środku zwiniętego bloku ma go otworzyć
+    function odslon(hash) {
+      if (!hash || hash.length < 2) return;
+      var cel = document.getElementById(hash.slice(1));
+      if (!cel) return;
+      var d = cel.closest ? cel.closest("details") : null;
+      var wSrodku = cel.querySelector ? cel.querySelector("details") : null;
+      if (d) d.open = true;
+      if (wSrodku) wSrodku.open = true;
+      setTimeout(function () { cel.scrollIntoView({ block: "start" }); }, 0);
+    }
+
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (a) odslon(a.getAttribute("href"));
+    });
+    window.addEventListener("hashchange", function () { odslon(location.hash); });
+    if (location.hash) odslon(location.hash);
+  })();
+</script>
 
 </body>
 </html>
